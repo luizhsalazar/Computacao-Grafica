@@ -1,0 +1,28 @@
+[user]
+	name = youremail@gmail.com
+	email = youremail@gmail.com
+[color]
+    ui = auto
+    diff = auto
+    status = auto
+[alias]
+    co = checkout
+    cm = commit
+    st = status
+    ld = log --stat --graph
+    ls = log --stat
+    ft = fetch --verbose
+    dp = diff -p --raw --binary
+    dc = diff --cached
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    who = shortlog -sn
+    pullr = pull --rebase
+    merged = branch --merged
+    nomerged = branch --no-merged
+[fetch]
+    recurseSubmodules = on-demand
+[push]
+    default = matching
+[status]
+    submodulesummary = 1
+
