@@ -19,18 +19,19 @@ void Transform::setType(rotateType type)
 
 void Transform::translateGeometricShape(GeometricShape* geometricShape, double dx, double dy)
 {
-    double matrix[3][3] = {{1,0,0},{0,1,0},{dx,dy,1}};
-    double answer[3] = {0,0,1};
-
+    double matriz[3][3] = {{1,0,0},{0,1,0},{dx,dy,1}};
+    double resultante[3] = {0,0,1};
 
     QList<Coordinate*> coordList = geometricShape->getCoordinates();
 
     foreach(Coordinate* coordinate, coordList)
     {
-        double mult[3] = {coordinate->getXAxisCoord(),coordinate->getYAxisCoord(),1};
-        multVetMatriz33(matrix,mult,answer);
-        coordinate->setXAxisCoord(answer[0]);
-        coordinate->setYAxisCoord(answer[1]);
+        double mult[3] = {coordinate->getXAxisCoord(),
+                          coordinate->getYAxisCoord(),
+                          1};
+        multVetMatriz3x3(matriz, mult, resultante);
+        coordinate->setXAxisCoord(resultante[0]);
+        coordinate->setYAxisCoord(resultante[1]);
     }
 }
 
@@ -56,7 +57,9 @@ QList<Coordinate*> Transform::calcScale(QList<Coordinate*> coordList,Coordinate*
     double matrixScale[3][3] = {{sX,0,0},{0,sY,0},{0,0,1}};
     double matrix[3][3] = {{0,0,0},{0,0,0},{0,0,0}} ;
     double answer[3];
-    double matrixTranslate[3][3] = {{1,0,0},{0,1,0},{-media->getXAxisCoord(),-media->getYAxisCoord(),1}};
+    double matrixTranslate[3][3] = {{1,0,0},{0,1,0},{-media->getXAxisCoord(),
+                                                     -media->getYAxisCoord(),
+                                                     1}};
 
     QList<Coordinate*> answerCoord;
     MatMultMat33(matrixTranslate, matrixScale,matrix);
@@ -67,7 +70,7 @@ QList<Coordinate*> Transform::calcScale(QList<Coordinate*> coordList,Coordinate*
     foreach(Coordinate* coordinate, coordList)
     {
         double vector[3] = {coordinate->getXAxisCoord(), coordinate->getYAxisCoord(), 1};
-        multVetMatriz33(matrixScale, vector, answer);
+        multVetMatriz3x3(matrixScale, vector, answer);
         coordinate->setXAxisCoord(answer[0]);
         coordinate->setYAxisCoord(answer[1]);
         answerCoord.append(coordinate);
@@ -92,7 +95,7 @@ void Transform::rotateGeometricShape(GeometricShape* geometricShape, int angle)
         {
             double answer[3];
             double vector[3] = {coordinate->getXAxisCoord(), coordinate->getYAxisCoord(), 1};
-            multVetMatriz33(matrix, vector, answer);
+            multVetMatriz3x3(matrix, vector, answer);
             coordinate->setXAxisCoord(answer[0]);
             coordinate->setYAxisCoord(answer[1]);
 
@@ -146,7 +149,7 @@ QList<Coordinate*> Transform::calcRotation(QList<Coordinate*> coordList, Coordin
     foreach(Coordinate* coordinate, coordList)
     {
         double vector[3] = {coordinate->getXAxisCoord(), coordinate->getYAxisCoord(), 1};
-        multVetMatriz33(matrixRotation, vector, answer);
+        multVetMatriz3x3(matrixRotation, vector, answer);
         coordinate->setXAxisCoord(answer[0]);
         coordinate->setYAxisCoord(answer[1]);
         answerCoord.append(coordinate);
@@ -155,12 +158,12 @@ QList<Coordinate*> Transform::calcRotation(QList<Coordinate*> coordList, Coordin
 }
 
 
-void Transform::multVetMatriz33(double matrix[3][3], double vector[3], double answer[3])
+void Transform::multVetMatriz3x3(double matriz[3][3], double vector[3], double resultante[3])
 {
     for (int i = 0; i < 3; i++) {
-        answer[i] = 0;
+        resultante[i] = 0;
         for (int j = 0; j < 3; j++) {
-            answer[i] += vector[j] * matrix[j][i];
+            resultante[i] += vector[j] * matriz[j][i];
         }
     }
 
@@ -193,7 +196,6 @@ void Transform::MatMultMat42 (double Mat1[4][4], double Mat2[4][2], double matAn
            for (p=0;p<4;p++)
                matAns[n][m] += Mat1[n][p] * Mat2[p][m];
 }
-
 
 Coordinate* Transform::calcMedia(QList<Coordinate*> coordList)
 {

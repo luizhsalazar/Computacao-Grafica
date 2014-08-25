@@ -7,13 +7,12 @@ class DisplayFile
 {
 private:
     QList<GeometricShape*> geometricShapes;
-    QList<GeometricShape*> cppGeometricShapes;
+    //QList<GeometricShape*> cppGeometricShapes;
 public:
     DisplayFile();
-    void addGeometricShape(GeometricShape*, float, float*);
+    void addGeometricShape(GeometricShape*);
     void deleteGeometricShape(int);
     QList<GeometricShape*> getGeometricShapes();
-    QList<GeometricShape*> getCppGeometricShapes();
 };
 
 #endif // DISPLAYFILE_H

@@ -34,22 +34,14 @@ public:
 
     void addLine(QString*, double, double, double, double, QColor);
     void addPolygon(QString*, QList<Coordinate*>, bool);
-//    void addBezierCurve(QString*, QList<Coordinate*>, QColor);
-//    void addBsplineCurve(QString*, QList<Coordinate*>, QColor);
     void addPoint(QString*, double, double, QColor);
 
     void deleteGeometricShape(int);
-
-//    void moveObject(int,double,double);
-//    void resizeObject(int,double,double);
-//    void rotateObject(int,int, rotateType);
-//    void rotateObject(int,int,double,double);
 
     void zoomInWindow(int);
     void zoomOutWindow(int);
     void moveWindowVertical(int);
     void moveWindowHorizontal(int);
-//    void rotateWindow(double);
 
     void redraw();
 };

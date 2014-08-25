@@ -12,9 +12,7 @@ enum GeometricShapeType
     POINT   = 0,
     LINE    = 1,
     POLYGON = 2,
-//    BEZIER  = 3,
-//    BSPLINE = 4
-          };
+};
 
 class GeometricShape
 {
@@ -30,9 +28,8 @@ public:
     void setName(QString*);
     void setStrokeColor(QColor);
     QColor getStrokeColor();
-    virtual QList<Coordinate*> getCoordinates();
+    virtual QList<Coordinate*> getCoordinates(); //É sobrescrito em todas classes que herdam esta.
     virtual GeometricShape* clone();
-    void calcCpp(double, double, double);
 
 };
 

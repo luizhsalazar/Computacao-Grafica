@@ -6,8 +6,6 @@
 #include <line.h>
 #include <point.h>
 #include <polygon.h>
-#include <bezier.h>
-#include <bspline.h>
 #include <coordinate.h>
 #include <QColor>
 
@@ -23,8 +21,6 @@ public:
     Line* createLine(Coordinate*, Coordinate*);
     Point* createPoint(QString*, double, double, QColor);
     Polygon* createPolygon(QString*, QList<Coordinate*>);
-    Bezier* createBezierCurve(QString*, QList<Coordinate*>, QColor);
-    Bspline* createBsplineCurve(QString*, QList<Coordinate*>, QColor);
 };
 
 #endif // GEOMETRICSHAPEFACTORY_H

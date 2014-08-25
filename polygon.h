@@ -16,10 +16,6 @@ public:
     QList<Coordinate*> getCoordinates();
     void addVertex(Coordinate*);
     Polygon* clone();
-
-    void setFill(bool);
-    bool isFilled();
-
 };
 
 #endif // POLYGON_H

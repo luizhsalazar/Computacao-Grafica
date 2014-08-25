@@ -11,7 +11,6 @@ QT       += widgets
 TARGET = SGI
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
         mainwindow.cpp \
     mediator.cpp \

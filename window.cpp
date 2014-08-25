@@ -41,7 +41,7 @@ void Window::zoomIn(int percent)
         this->xwmin += percent;
         this->ywmax -= percent;
         this->ywmin += percent;
-        this->redraw(Mediator::getInstance()->getCppGeometricShapes());
+        this->redraw(Mediator::getInstance()->getGeometricShapes());
     }
 }
 
@@ -51,7 +51,7 @@ void Window::zoomOut(int percent)
     this->xwmin -= percent;
     this->ywmax += percent;
     this->ywmin -= percent;
-    this->redraw(Mediator::getInstance()->getCppGeometricShapes());
+    this->redraw(Mediator::getInstance()->getGeometricShapes());
 }
 
 void Window::move(int u, mov_dir direction)
@@ -73,13 +73,9 @@ void Window::move(int u, mov_dir direction)
         float yvar = 0;
         if(direction == HORIZONTAL){
             xvar = u;
-        }else{
-//            if(this->vup[0]->getYAxisCoord() > this->vup[1]->getYAxisCoord())
-//                u = -u;
+        } else{
             yvar = u;
         }
-
-
 
         //movendo a window
         this->xwmax += xvar;
@@ -88,92 +84,9 @@ void Window::move(int u, mov_dir direction)
         this->ywmin += yvar;
 
         //redesenhando os objetos
-        redraw(Mediator::getInstance()->getCppGeometricShapes());
+        redraw(Mediator::getInstance()->getGeometricShapes());
     }
 }
-
-//void Window::move(int u, mov_dir direction)
-//{
-//    if(u != 0)
-//    {
-//        //Novas Coordenadas para o vup
-//        double ax = this->vup[0]->getXAxisCoord() + u;
-//        double ay = this->vup[0]->getYAxisCoord() + u;
-//        double bx = this->vup[1]->getXAxisCoord() + u;
-//        double by = this->vup[1]->getYAxisCoord() + u;
-
-//        this->vup[0]->setXAxisCoord(ax);
-//        this->vup[0]->setYAxisCoord(ay);
-//        this->vup[1]->setXAxisCoord(bx);
-//        this->vup[1]->setYAxisCoord(by);
-
-//        //Calculando vetor normalizado de vup com tamanho "u" e mesmo sentido
-//        float rx = bx - ax;
-//        float ry = by - ay;
-//        float sqrt1 = sqrt(rx*rx + ry*ry);
-//        float v[2] = {(bx - ax)/sqrt1, (by - ay)/sqrt1};
-
-//        //Calculando vetor ortorgonal a vup se a direção do movimento for horizontal
-//        if(direction == HORIZONTAL)
-//        {
-//            if(v[1]!=0)
-//            {
-//                v[1] = -v[0]/v[1];
-//                v[0] = 1;
-//            }
-//            else
-//            {
-//                v[0] = 0;
-//                v[1] = -1;
-//            }
-
-//            sqrt1 = sqrt(v[0]*v[0] + v[1]*v[1]);
-//            v[0] = v[0]/sqrt1;
-//            v[1] = v[1]/sqrt1;
-
-//            //Verifica se o vup está virado para baixo
-//            //se sim inverte a direção da movimentação
-//            if(this->vup[0]->getYAxisCoord() > this->vup[1]->getYAxisCoord())
-//                u = -u;
-
-//        }
-
-//        v[0] *= u;
-//        v[1] *= u;
-
-//        //movendo a window
-//        this->xwmax += v[0];
-//        this->xwmin += v[0];
-//        this->ywmax += v[1];
-//        this->ywmin += v[1];
-
-//        //redesenhando os objetos
-//        redraw(Mediator::getInstance()->getCppGeometricShapes());
-//    }
-//}
-
-//void Window::rotate(double angle)
-//{
-//    Coordinate* coordA = this->vup[0];
-//    Coordinate* coordB = this->vup[1];
-
-//    float* wc = this->getCenter();
-
-//    float rx = wc[0];
-//    float ry = wc[1];
-
-//    Transform* t = Transform::getInstance();
-//    t->rotateGeometricShape(new Line(coordA, coordB), -angle, rx, ry);
-
-//    QList<GeometricShape*> objectsToRotate = Mediator::getInstance()->getCppGeometricShapes();
-
-//    foreach(GeometricShape* gs, objectsToRotate)
-//    {
-//        gs->calcCpp(angle, rx, ry);
-//    }
-
-//    this->redraw(objectsToRotate);
-//}
 
 float* Window::getCenter()
 {

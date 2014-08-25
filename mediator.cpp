@@ -41,7 +41,7 @@ void Mediator::deleteGeometricShape(int index)
 
 void Mediator::addGeometricShapeToDisplayFile(GeometricShape* geometricShape)
 {
-    this->displayFile->addGeometricShape(geometricShape, this->window->getAngle(), this->window->getCenter());
+    this->displayFile->addGeometricShape(geometricShape); //, this->window->getAngle(), this->window->getCenter());
     this->mainWindow->addObjectName(geometricShape->getName()->toStdString().data());
 }
 
@@ -51,20 +51,6 @@ void Mediator::addLine(QString* name, double ax, double ay, double bx, double by
     this->addGeometricShapeToDisplayFile(line);
     this->redraw();
 }
-
-//void Mediator::addBezierCurve(QString* name, QList<Coordinate*> coordinates, QColor strokeColor)
-//{
-//    Bezier* curve = GeometricShapeFactory::getInstance()->createBezierCurve(name, coordinates, strokeColor);
-//    this->addGeometricShapeToDisplayFile(curve);
-//    this->redraw();
-//}
-
-//void Mediator::addBsplineCurve(QString* name, QList<Coordinate *> coordinates, QColor strokeColor)
-//{
-//    Bspline* cspline = GeometricShapeFactory::getInstance()->createBsplineCurve(name,coordinates,strokeColor);
-//    this->addGeometricShapeToDisplayFile(cspline);
-//    this->redraw();
-//}
 
 void Mediator::addPoint(QString* name, double ax, double ay, QColor strokeColor)
 {
@@ -76,8 +62,6 @@ void Mediator::addPoint(QString* name, double ax, double ay, QColor strokeColor)
 void Mediator::addPolygon(QString* name, QList<Coordinate*> vertices, bool isFilled)
 {
     Polygon* polygon = GeometricShapeFactory::getInstance()->createPolygon(name, vertices);
-    polygon->setFill(isFilled);
-
     this->addGeometricShapeToDisplayFile(polygon);
 
     this->redraw();
@@ -85,19 +69,13 @@ void Mediator::addPolygon(QString* name, QList<Coordinate*> vertices, bool isFil
 
 void Mediator::redraw()
 {
-    this->window->redraw(this->getCppGeometricShapes());
+    this->window->redraw(this->getGeometricShapes());
 }
 
 QList<GeometricShape*> Mediator::getGeometricShapes()
 {
     return this->displayFile->getGeometricShapes();
 }
-
-QList<GeometricShape*> Mediator::getCppGeometricShapes()
-{
-    return this->displayFile->getCppGeometricShapes();
-}
-
 
 void Mediator::zoomInWindow(int percent)
 {
@@ -118,82 +96,3 @@ void Mediator::moveWindowHorizontal(int u)
 {
     this->window->move(u, HORIZONTAL);
 }
-
-
-//void Mediator::moveObject(int index, double dx, double dy)
-//{
-//    QList<GeometricShape*> geometricShapeList = this->getGeometricShapes();
-//    QList<GeometricShape*> cppGeometricShapeList = this->getCppGeometricShapes();
-
-//    GeometricShape* gs = geometricShapeList.at(index);
-//    GeometricShape* cppGs = cppGeometricShapeList.at(index);
-
-//    if(gs != NULL)
-//    {
-//        Transform::getInstance()->translateGeometricShape(gs, dx, dy);
-//        Transform::getInstance()->translateGeometricShape(cppGs, dx, dy);
-//        this->redraw();
-//    }
-
-//}
-
-//void Mediator::resizeObject(int index, double sX, double sY)
-//{
-//    QList<GeometricShape*> geometricShapeList = this->getGeometricShapes();
-//    QList<GeometricShape*> cppGeometricShapeList = this->getCppGeometricShapes();
-
-//    GeometricShape* gs = geometricShapeList.at(index);
-//    GeometricShape* cppGs = cppGeometricShapeList.at(index);
-
-//    if(gs != NULL)
-//    {
-//        Transform::getInstance()->scaleGeometricShape(gs,sX,sY);
-//        Transform::getInstance()->scaleGeometricShape(cppGs,sX,sY);
-//        this->redraw();
-//    }
-
-//}
-
-//void Mediator::rotateObject(int index,int angle, rotateType type)
-//{
-//    QList<GeometricShape*> geometricShapeList = this->getGeometricShapes();
-//    QList<GeometricShape*> cppGeometricShapeList = this->getCppGeometricShapes();
-
-//    GeometricShape* gs = geometricShapeList.at(index);
-//    GeometricShape* cppGs = cppGeometricShapeList.at(index);
-
-//    Transform* transform = Transform::getInstance();
-//    transform->setType(type);
-
-//    if(gs != NULL)
-//    {
-//        transform->rotateGeometricShape(gs,angle);
-//        transform->rotateGeometricShape(cppGs,angle);
-//        this->redraw();
-//    }
-
-//}
-
-//void Mediator::rotateObject(int index,int angle,double rX, double rY)
-//{
-//    QList<GeometricShape*> geometricShapeList = this->getGeometricShapes();
-//    QList<GeometricShape*> cppGeometricShapeList = this->getCppGeometricShapes();
-
-//    GeometricShape* gs = geometricShapeList.at(index);
-//    GeometricShape* cppGs = cppGeometricShapeList.at(index);
-
-//    if(gs != NULL)
-//    {
-//        Transform::getInstance()->rotateGeometricShape(gs,angle,rX,rY);
-//        Transform::getInstance()->rotateGeometricShape(cppGs,angle,rX,rY);
-//        this->redraw();
-//    }
-//}
-
-//void Mediator::rotateWindow(double angle)
-//{
-//    this->window->rotate(angle);
-//}
-
-
-

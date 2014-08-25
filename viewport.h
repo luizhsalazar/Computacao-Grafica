@@ -28,9 +28,6 @@ private:
     void drawLine(Line*);
     void drawPoint(Point*);
     void drawPolygon(Polygon*);
-    void drawBezierCurve(Bezier*);
-    void drawBsplineCurve(Bspline*);
-    bool insideClipEdge(Coordinate*, OutCode);
 
 public:
     Viewport(double, QGraphicsView*);
@@ -40,11 +37,7 @@ public:
     void drawGeometricShape(GeometricShape*);
     Coordinate* transformCoordinate(Coordinate*);
 
-    OutCode computeOutCode(double, double);
-
     void updateScene();
-
-
 };
 
 #endif // VIEWPORT_H
