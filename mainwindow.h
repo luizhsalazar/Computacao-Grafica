@@ -33,6 +33,8 @@ private slots:
     void on_deleteButton_clicked();
 
     void on_actionAddObjeto_triggered();
+    void on_pushButtonScale_clicked();
+    void on_pushButtonRotate_clicked();
 };
 
 #endif // MAINWINDOW_H

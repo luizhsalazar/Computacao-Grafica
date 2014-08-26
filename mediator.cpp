@@ -96,3 +96,47 @@ void Mediator::moveWindowHorizontal(int u)
 {
     this->window->move(u, HORIZONTAL);
 }
+
+void Mediator::resizeObject(int index, double sX, double sY)
+{
+    QList<GeometricShape*> geometricShapeList = this->getGeometricShapes();
+
+    GeometricShape* gs = geometricShapeList.at(index);
+
+    if(gs != NULL)
+    {
+        Transform::getInstance()->scaleGeometricShape(gs,sX,sY);
+        this->redraw();
+    }
+
+}
+
+void Mediator::rotateObject(int index,int angle, rotateType type)
+{
+    QList<GeometricShape*> geometricShapeList = this->getGeometricShapes();
+
+    GeometricShape* gs = geometricShapeList.at(index);
+
+    Transform* transform = Transform::getInstance();
+    transform->setType(type);
+
+    if(gs != NULL)
+    {
+        transform->rotateGeometricShape(gs,angle);
+        this->redraw();
+    }
+
+}
+
+void Mediator::rotateObject(int index,int angle,double rX, double rY)
+{
+    QList<GeometricShape*> geometricShapeList = this->getGeometricShapes();
+
+    GeometricShape* gs = geometricShapeList.at(index);
+
+    if(gs != NULL)
+    {
+        Transform::getInstance()->rotateGeometricShape(gs,angle,rX,rY);
+        this->redraw();
+    }
+}

@@ -78,3 +78,48 @@ void MainWindow::on_actionAddObjeto_triggered()
 {
     this->addObjectsUi->exec();
 }
+
+void MainWindow::on_pushButtonScale_clicked()
+{
+    QListWidget* listObjects = this->ui->listObjects;
+    int index = listObjects->currentRow();
+
+    if(index != -1)
+    {
+        Mediator::getInstance()->resizeObject(index,this->ui->SpinBoxScaleX->value(),this->ui->SpinBoxScaleY->value());
+    }
+    else
+    {
+        QMessageBox::warning(this,"Erro","Nenhum objeto selecionado!",QMessageBox::Ok);
+    }
+}
+
+void MainWindow::on_pushButtonRotate_clicked()
+{
+    QListWidget* listObjects = this->ui->listObjects;
+    int index = listObjects->currentRow();
+
+        if(index != -1)
+        {
+            if(ui->radioOrigin->isChecked())
+            {
+                Mediator::getInstance()->rotateObject(index,ui->spinBoxRotate->value(),ORIGIN);
+            }
+            else if(ui->radioPoint->isChecked())
+            {
+                Mediator::getInstance()->rotateObject(index,ui->spinBoxRotate->value(),ui->SpinBoxPX->value(),ui->SpinBoxPY->value());
+
+            }
+            else if(ui->radioCenter->isChecked())
+            {
+                Mediator::getInstance()->rotateObject(index,ui->spinBoxRotate->value(),CENTER);
+            }
+        }
+
+        else
+        {
+            QMessageBox::warning(this,"Erro","Nenhum objeto selecionado!",QMessageBox::Ok);
+
+        }
+
+}
