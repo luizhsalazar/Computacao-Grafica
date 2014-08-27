@@ -13,7 +13,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    mediator.cpp \
     window.cpp \
     viewport.cpp \
     point.cpp \
@@ -25,10 +24,10 @@ SOURCES += main.cpp\
     addobjects.cpp \
     coordinate.cpp \
     test.cpp \
-    transform.cpp
+    transform.cpp \
+    controller.cpp
 
 HEADERS  += mainwindow.h \
-    mediator.h \
     window.h \
     viewport.h \
     point.h \
@@ -40,7 +39,8 @@ HEADERS  += mainwindow.h \
     addobjects.h \
     coordinate.h \
     test.h \
-    transform.h
+    transform.h \
+    controller.h
 
 FORMS    += mainwindow.ui \
     addobjects.ui

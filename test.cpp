@@ -2,7 +2,7 @@
 
 Test::Test()
 {
-    this->m = Mediator::getInstance();
+    //this->m = Mediator::getInstance();
 }
 
 void Test::run()

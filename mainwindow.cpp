@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QListWidgetItem>
-#include <mediator.h>
+#include <controller.h>
 
 #include <QMessageBox>
 
@@ -31,32 +31,32 @@ void MainWindow::addObjectName(const char* name)
 
 void MainWindow::on_buttonMoreZoom_clicked()
 {
-    Mediator::getInstance()->zoomInWindow(this->ui->zoomSpeed->value());
+    Controller::getInstance()->zoomInWindow(this->ui->zoomSpeed->value());
 }
 
 void MainWindow::on_buttonLessZoom_clicked()
 {
-    Mediator::getInstance()->zoomOutWindow(this->ui->zoomSpeed->value());
+    Controller::getInstance()->zoomOutWindow(this->ui->zoomSpeed->value());
 }
 
 void MainWindow::on_buttonUp_clicked()
 {
-    Mediator::getInstance()->moveWindowVertical(this->ui->WindowControlSpeed->value());
+    Controller::getInstance()->moveWindowVertical(this->ui->WindowControlSpeed->value());
 }
 
 void MainWindow::on_buttonDown_clicked()
 {
-    Mediator::getInstance()->moveWindowVertical(-this->ui->WindowControlSpeed->value());
+    Controller::getInstance()->moveWindowVertical(-this->ui->WindowControlSpeed->value());
 }
 
 void MainWindow::on_buttonLeft_clicked()
 {
-    Mediator::getInstance()->moveWindowHorizontal(-this->ui->WindowControlSpeed->value());
+    Controller::getInstance()->moveWindowHorizontal(-this->ui->WindowControlSpeed->value());
 }
 
 void MainWindow::on_buttonRight_clicked()
 {
-    Mediator::getInstance()->moveWindowHorizontal(this->ui->WindowControlSpeed->value());
+    Controller::getInstance()->moveWindowHorizontal(this->ui->WindowControlSpeed->value());
 }
 
 void MainWindow::on_deleteButton_clicked()
@@ -71,7 +71,7 @@ void MainWindow::on_deleteButton_clicked()
 
     listObjects->setCurrentRow(-1);
 
-    Mediator::getInstance()->deleteGeometricShape(index);
+    Controller::getInstance()->deleteGeometricShape(index);
 }
 
 void MainWindow::on_actionAddObjeto_triggered()
@@ -86,7 +86,7 @@ void MainWindow::on_pushButtonScale_clicked()
 
     if(index != -1)
     {
-        Mediator::getInstance()->resizeObject(index,this->ui->SpinBoxScaleX->value(),this->ui->SpinBoxScaleY->value());
+        Controller::getInstance()->resizeObject(index,this->ui->SpinBoxScaleX->value(),this->ui->SpinBoxScaleY->value());
     }
     else
     {
@@ -103,16 +103,16 @@ void MainWindow::on_pushButtonRotate_clicked()
         {
             if(ui->radioOrigin->isChecked())
             {
-                Mediator::getInstance()->rotateObject(index,ui->spinBoxRotate->value(),ORIGIN);
+                Controller::getInstance()->rotateObject(index,ui->spinBoxRotate->value(),ORIGIN);
             }
             else if(ui->radioPoint->isChecked())
             {
-                Mediator::getInstance()->rotateObject(index,ui->spinBoxRotate->value(),ui->SpinBoxPX->value(),ui->SpinBoxPY->value());
+                Controller::getInstance()->rotateObject(index,ui->spinBoxRotate->value(),ui->SpinBoxPX->value(),ui->SpinBoxPY->value());
 
             }
             else if(ui->radioCenter->isChecked())
             {
-                Mediator::getInstance()->rotateObject(index,ui->spinBoxRotate->value(),CENTER);
+                Controller::getInstance()->rotateObject(index,ui->spinBoxRotate->value(),CENTER);
             }
         }
 
@@ -132,7 +132,7 @@ void MainWindow::on_pushButtonMove_clicked()
         if(index != -1)
         {
 
-            Mediator::getInstance()->moveObject(index,this->ui->SpinBoxMoveX->value(),this->ui->SpinBoxMoveY->value());
+            Controller::getInstance()->moveObject(index,this->ui->SpinBoxMoveX->value(),this->ui->SpinBoxMoveY->value());
         }
         else
         {

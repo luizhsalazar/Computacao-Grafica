@@ -1,5 +1,5 @@
-#ifndef MEDIATOR_H
-#define MEDIATOR_H
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
 
 #include <QList>
 #include <mainwindow.h>
@@ -11,7 +11,7 @@
 #include <coordinate.h>
 using namespace std;
 
-class Mediator
+class Controller
 {
 private:    
     //Variables    
@@ -20,17 +20,17 @@ private:
     DisplayFile *displayFile;
 
     //Methods
-    Mediator();
+    Controller();
     void addGeometricShapeToDisplayFile(GeometricShape*);
 
 public:
-    ~Mediator();
+    ~Controller();
 
     QList<GeometricShape*> getGeometricShapes();
     QList<GeometricShape*> getCppGeometricShapes();
 
-    static Mediator* getInstance();
-    static Mediator* init();
+    static Controller* getInstance();
+    static Controller* init();
 
     void addLine(QString*, double, double, double, double, QColor);
     void addPolygon(QString*, QList<Coordinate*>, bool);
@@ -51,4 +51,4 @@ public:
     void redraw();
 };
 
-#endif // MEDIATOR_H
+#endif // CONTROLLER_H

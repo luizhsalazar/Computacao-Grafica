@@ -1,12 +1,12 @@
-#include "mediator.h"
+#include "controller.h"
 
 /**
   SINGLETON CLASS
 */
 
-static Mediator* m_instance = 0;
+static Controller* m_instance = 0;
 
-Mediator::Mediator()
+Controller::Controller()
 {
     this->mainWindow = new MainWindow;
     this->window =  new Window(mainWindow->getDrawWindow());
@@ -14,52 +14,52 @@ Mediator::Mediator()
     mainWindow->show();
 }
 
-Mediator::~Mediator()
+Controller::~Controller()
 {
 
 }
 
-Mediator* Mediator::init()
+Controller* Controller::init()
 {
-    return Mediator::getInstance();
+    return Controller::getInstance();
 }
 
-Mediator* Mediator::getInstance()
+Controller* Controller::getInstance()
 {
     if(m_instance == 0)
-        m_instance = new Mediator();
+        m_instance = new Controller();
 
     return m_instance;
 }
 
-void Mediator::deleteGeometricShape(int index)
+void Controller::deleteGeometricShape(int index)
 {
     this->displayFile->deleteGeometricShape(index);
     this->redraw();
 }
 
 
-void Mediator::addGeometricShapeToDisplayFile(GeometricShape* geometricShape)
+void Controller::addGeometricShapeToDisplayFile(GeometricShape* geometricShape)
 {
     this->displayFile->addGeometricShape(geometricShape);
     this->mainWindow->addObjectName(geometricShape->getName()->toStdString().data());
 }
 
-void Mediator::addLine(QString* name, double ax, double ay, double bx, double by, QColor strokeColor)
+void Controller::addLine(QString* name, double ax, double ay, double bx, double by, QColor strokeColor)
 {
     Line* line = GeometricShapeFactory::getInstance()->createLine(name, ax, ay, bx, by, strokeColor);
     this->addGeometricShapeToDisplayFile(line);
     this->redraw();
 }
 
-void Mediator::addPoint(QString* name, double ax, double ay, QColor strokeColor)
+void Controller::addPoint(QString* name, double ax, double ay, QColor strokeColor)
 {
     Point* point = GeometricShapeFactory::getInstance()->createPoint(name, ax, ay, strokeColor);
     this->addGeometricShapeToDisplayFile(point);
     this->redraw();
 }
 
-void Mediator::addPolygon(QString* name, QList<Coordinate*> vertices, bool isFilled)
+void Controller::addPolygon(QString* name, QList<Coordinate*> vertices, bool isFilled)
 {
     Polygon* polygon = GeometricShapeFactory::getInstance()->createPolygon(name, vertices);
     this->addGeometricShapeToDisplayFile(polygon);
@@ -67,37 +67,37 @@ void Mediator::addPolygon(QString* name, QList<Coordinate*> vertices, bool isFil
     this->redraw();
 }
 
-void Mediator::redraw()
+void Controller::redraw()
 {
     this->window->redraw(this->getGeometricShapes());
 }
 
-QList<GeometricShape*> Mediator::getGeometricShapes()
+QList<GeometricShape*> Controller::getGeometricShapes()
 {
     return this->displayFile->getGeometricShapes();
 }
 
-void Mediator::zoomInWindow(int percent)
+void Controller::zoomInWindow(int percent)
 {
     this->window->zoomIn(percent);
 }
 
-void Mediator::zoomOutWindow(int percent)
+void Controller::zoomOutWindow(int percent)
 {
     this->window->zoomOut(percent);
 }
 
-void Mediator::moveWindowVertical(int u)
+void Controller::moveWindowVertical(int u)
 {
     this->window->move(u, VERTICAL);
 }
 
-void Mediator::moveWindowHorizontal(int u)
+void Controller::moveWindowHorizontal(int u)
 {
     this->window->move(u, HORIZONTAL);
 }
 
-void Mediator::resizeObject(int index, double sX, double sY)
+void Controller::resizeObject(int index, double sX, double sY)
 {
     QList<GeometricShape*> geometricShapeList = this->getGeometricShapes();
 
@@ -111,7 +111,7 @@ void Mediator::resizeObject(int index, double sX, double sY)
 
 }
 
-void Mediator::rotateObject(int index,int angle, rotateType type)
+void Controller::rotateObject(int index,int angle, rotateType type)
 {
     QList<GeometricShape*> geometricShapeList = this->getGeometricShapes();
 
@@ -128,7 +128,7 @@ void Mediator::rotateObject(int index,int angle, rotateType type)
 
 }
 
-void Mediator::rotateObject(int index,int angle,double rX, double rY)
+void Controller::rotateObject(int index,int angle,double rX, double rY)
 {
     QList<GeometricShape*> geometricShapeList = this->getGeometricShapes();
 
@@ -141,7 +141,7 @@ void Mediator::rotateObject(int index,int angle,double rX, double rY)
     }
 }
 
-void Mediator::moveObject(int index, double dx, double dy)
+void Controller::moveObject(int index, double dx, double dy)
 {
     QList<GeometricShape*> geometricShapeList = this->getGeometricShapes();
 

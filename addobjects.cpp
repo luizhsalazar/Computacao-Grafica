@@ -4,7 +4,7 @@
 
 #include <QMessageBox>
 
-#include <mediator.h>
+#include <controller.h>
 
 AddObjects::AddObjects(QWidget *parent) :
         QDialog(parent),
@@ -43,7 +43,7 @@ void AddObjects::on_pushButtonPoint_clicked()
     else
     {
         QColor strokeColor = this->qcolor;
-        Mediator::getInstance()->addPoint(&name, this->ui->SpinBoxPointX->value(),this->ui->SpinBoxPointY->value(), strokeColor);
+        Controller::getInstance()->addPoint(&name, this->ui->SpinBoxPointX->value(),this->ui->SpinBoxPointY->value(), strokeColor);
         this->close();
     }
 }
@@ -57,7 +57,7 @@ void AddObjects::on_pushButtonLine_clicked()
     else
     {
         QColor strokeColor = this->qcolor;
-        Mediator::getInstance()->addLine(&name,
+        Controller::getInstance()->addLine(&name,
                                          this->ui->SpinBoxLineX1->value(),
                                          this->ui->SpinBoxLineY1->value(),
                                          this->ui->SpinBoxLineX2->value(),
@@ -78,10 +78,10 @@ void AddObjects::on_pushButtonPolygon_clicked()
 
 //        QColor strokeColor = this->qcolor;
 //        if(this->ui->checkBoxFill->isChecked())
-//            Mediator::getInstance()->addPolygon(&name, vertices, strokeColor,true);
+//            Controller::getInstance()->addPolygon(&name, vertices, strokeColor,true);
 //        else
-            //Mediator::getInstance()->addPolygon(&name, vertices, strokeColor,false);
-            Mediator::getInstance()->addPolygon(&name, vertices, false);
+            //Controller::getInstance()->addPolygon(&name, vertices, strokeColor,false);
+            Controller::getInstance()->addPolygon(&name, vertices, false);
 
 
         //Limpa tabela e vertices
@@ -99,7 +99,6 @@ void AddObjects::on_pushButtonPolygon_clicked()
 
 }
 
-// Mtodo para a adio de pontos na tabela e criao do polgono
 void AddObjects::on_pushButtonAddCoordPolygon_clicked()
 {
     vertices.append(new Coordinate(this->ui->SpinBoxPolygonX->value(),this->ui->SpinBoxPolygonY->value()));

@@ -1,6 +1,6 @@
 #include "window.h"
 
-#include <mediator.h>
+#include <controller.h>
 #include <transform.h>
 #include <stdio.h>
 
@@ -41,7 +41,7 @@ void Window::zoomIn(int percent)
         this->xwmin += percent;
         this->ywmax -= percent;
         this->ywmin += percent;
-        this->redraw(Mediator::getInstance()->getGeometricShapes());
+        this->redraw(Controller::getInstance()->getGeometricShapes());
     }
 }
 
@@ -51,7 +51,7 @@ void Window::zoomOut(int percent)
     this->xwmin -= percent;
     this->ywmax += percent;
     this->ywmin -= percent;
-    this->redraw(Mediator::getInstance()->getGeometricShapes());
+    this->redraw(Controller::getInstance()->getGeometricShapes());
 }
 
 void Window::move(int u, mov_dir direction)
@@ -84,7 +84,7 @@ void Window::move(int u, mov_dir direction)
         this->ywmin += yvar;
 
         //redesenhando os objetos
-        redraw(Mediator::getInstance()->getGeometricShapes());
+        redraw(Controller::getInstance()->getGeometricShapes());
     }
 }
 
