@@ -123,3 +123,20 @@ void MainWindow::on_pushButtonRotate_clicked()
         }
 
 }
+
+void MainWindow::on_pushButtonMove_clicked()
+{
+    QListWidget* listObjects = this->ui->listObjects;
+        int index = listObjects->currentRow();
+
+        if(index != -1)
+        {
+
+            Mediator::getInstance()->moveObject(index,this->ui->SpinBoxMoveX->value(),this->ui->SpinBoxMoveY->value());
+        }
+        else
+        {
+            QMessageBox::warning(this,"Erro","Nenhum objeto selecionado!",QMessageBox::Ok);
+
+        }
+}

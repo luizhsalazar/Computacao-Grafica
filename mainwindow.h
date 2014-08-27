@@ -35,6 +35,7 @@ private slots:
     void on_actionAddObjeto_triggered();
     void on_pushButtonScale_clicked();
     void on_pushButtonRotate_clicked();
+    void on_pushButtonMove_clicked();
 };
 
 #endif // MAINWINDOW_H

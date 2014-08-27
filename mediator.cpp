@@ -140,3 +140,17 @@ void Mediator::rotateObject(int index,int angle,double rX, double rY)
         this->redraw();
     }
 }
+
+void Mediator::moveObject(int index, double dx, double dy)
+{
+    QList<GeometricShape*> geometricShapeList = this->getGeometricShapes();
+
+    GeometricShape* gs = geometricShapeList.at(index);
+
+    if(gs != NULL)
+    {
+        Transform::getInstance()->translateGeometricShape(gs, dx, dy);
+        this->redraw();
+    }
+
+}

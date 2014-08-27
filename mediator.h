@@ -41,6 +41,7 @@ public:
     void resizeObject(int,double,double);
     void rotateObject(int,int, rotateType);
     void rotateObject(int,int,double,double);
+    void moveObject(int,double,double);
 
     void zoomInWindow(int);
     void zoomOutWindow(int);
