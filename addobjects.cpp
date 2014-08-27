@@ -76,12 +76,12 @@ void AddObjects::on_pushButtonPolygon_clicked()
     else
     {
 
-//        QColor strokeColor = this->qcolor;
+        QColor strokeColor = this->qcolor;
 //        if(this->ui->checkBoxFill->isChecked())
 //            Mediator::getInstance()->addPolygon(&name, vertices, strokeColor,true);
 //        else
-            //Mediator::getInstance()->addPolygon(&name, vertices, strokeColor,false);
-            Mediator::getInstance()->addPolygon(&name, vertices, false);
+//            Mediator::getInstance()->addPolygon(&name, vertices, strokeColor,false);
+//            Mediator::getInstance()->addPolygon(&name, vertices, false);
 
 
         //Limpa tabela e vertices
@@ -142,4 +142,14 @@ void AddObjects::on_pushButtonCancel_4_clicked()
 void AddObjects::on_pushButtonCancel_5_clicked()
 {
     this->close();
+}
+
+void AddObjects::on_selectColorButton_clicked()
+{
+    this->qcolor = this->qColorDialog->getColor(this->qcolor);
+    this->qcolor.toRgb();
+
+    this->ui->red->setValue(this->qcolor.red());
+    this->ui->blue->setValue(this->qcolor.blue());
+    this->ui->green->setValue(this->qcolor.green());
 }
