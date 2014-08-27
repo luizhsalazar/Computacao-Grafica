@@ -33,8 +33,6 @@ public:
     void translateGeometricShape(GeometricShape*, double, double);
     void scaleGeometricShape(GeometricShape*,double,double);
 
-    //REVISAR OPERAÇÕES!!
-
     //Multiplica matriz 3x3 por vetor 1x3
     void multVetMatriz3x3(double[3][3],double[3],double[3]);
     //Multiplica matriz 3x3 por outra 3x3

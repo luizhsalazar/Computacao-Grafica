@@ -41,7 +41,7 @@ void Mediator::deleteGeometricShape(int index)
 
 void Mediator::addGeometricShapeToDisplayFile(GeometricShape* geometricShape)
 {
-    this->displayFile->addGeometricShape(geometricShape); //, this->window->getAngle(), this->window->getCenter());
+    this->displayFile->addGeometricShape(geometricShape);
     this->mainWindow->addObjectName(geometricShape->getName()->toStdString().data());
 }
 
