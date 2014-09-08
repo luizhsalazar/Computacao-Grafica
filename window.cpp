@@ -129,7 +129,7 @@ void Window::rotate(double angle)
     Transform* t = Transform::getInstance();
     t->rotateGeometricShape(new Line(coordA, coordB), -angle, rx, ry);
 
-    QList<GeometricShape*> objectsToRotate = Controller::getInstance()->getCppGeometricShapes();
+    QList<GeometricShape*> objectsToRotate = Controller::getInstance()->getGeometricShapes();
 
     foreach(GeometricShape* gs, objectsToRotate)
     {
