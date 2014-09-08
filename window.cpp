@@ -116,4 +116,25 @@ float Window::getAngle()
     return a;
 }
 
+void Window::rotate(double angle)
+{
+    Coordinate* coordA = this->vup[0];
+    Coordinate* coordB = this->vup[1];
 
+    float* wc = this->getCenter();
+
+    float rx = wc[0];
+    float ry = wc[1];
+
+    Transform* t = Transform::getInstance();
+    t->rotateGeometricShape(new Line(coordA, coordB), -angle, rx, ry);
+
+    QList<GeometricShape*> objectsToRotate = Controller::getInstance()->getCppGeometricShapes();
+
+    foreach(GeometricShape* gs, objectsToRotate)
+    {
+        gs->calcCpp(angle, rx, ry);
+    }
+
+    this->redraw(objectsToRotate);
+}

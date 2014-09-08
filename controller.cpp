@@ -41,7 +41,7 @@ void Controller::deleteGeometricShape(int index)
 
 void Controller::addGeometricShapeToDisplayFile(GeometricShape* geometricShape)
 {
-    this->displayFile->addGeometricShape(geometricShape);
+    this->displayFile->addGeometricShape(geometricShape, this->window->getAngle(), this->window->getCenter());
     this->mainWindow->addObjectName(geometricShape->getName()->toStdString().data());
 }
 
@@ -75,6 +75,11 @@ void Controller::redraw()
 QList<GeometricShape*> Controller::getGeometricShapes()
 {
     return this->displayFile->getGeometricShapes();
+}
+
+QList<GeometricShape*> Controller::getCppGeometricShapes()
+{
+    return this->displayFile->getCppGeometricShapes();
 }
 
 void Controller::zoomInWindow(int percent)
@@ -153,4 +158,9 @@ void Controller::moveObject(int index, double dx, double dy)
         this->redraw();
     }
 
+}
+
+void Controller::rotateWindow(double angle)
+{
+    this->window->rotate(angle);
 }

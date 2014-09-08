@@ -30,6 +30,7 @@ public:
     QColor getStrokeColor();
     virtual QList<Coordinate*> getCoordinates(); //É sobrescrito em todas classes que herdam esta.
     virtual GeometricShape* clone();
+    void calcCpp(double, double, double);
 
 };
 

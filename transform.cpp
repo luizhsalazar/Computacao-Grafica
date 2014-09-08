@@ -109,7 +109,6 @@ void Transform::rotateGeometricShape(GeometricShape* geometricShape, int angle)
             coordinate->setYAxisCoord(coordinate->getYAxisCoord());
         }
     }
-
 }
 
 void Transform::rotateGeometricShape(GeometricShape* geometricShape, int angle, double rX, double rY)

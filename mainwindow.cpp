@@ -140,3 +140,18 @@ void MainWindow::on_pushButtonMove_clicked()
 
         }
 }
+
+void MainWindow::on_buttonRotacionarWindowLeft_clicked()
+{
+    Controller::getInstance()->rotateWindow(-this->ui->rotateUnity->value());
+}
+
+void MainWindow::on_buttonRotacionarWindowRight_clicked()
+{
+    Controller::getInstance()->rotateWindow(this->ui->rotateUnity->value());
+}
+
+void MainWindow::on_rotateUnity_editingFinished()
+{
+
+}

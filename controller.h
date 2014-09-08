@@ -47,6 +47,7 @@ public:
     void zoomOutWindow(int);
     void moveWindowVertical(int);
     void moveWindowHorizontal(int);
+    void rotateWindow(double);
 
     void redraw();
 };
