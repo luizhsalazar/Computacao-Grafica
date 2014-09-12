@@ -17,13 +17,11 @@ AddObjects::AddObjects(QWidget *parent) :
     this->qcolor = QColor(0,0,0);
     this->qColorDialog = new QColorDialog();
 
-    // Criao das colunas com seus respectivos tamanhos PARA POLIGONO
     this->ui->tableWidget->insertColumn(0);
     this->ui->tableWidget->insertColumn(1);
     this->ui->tableWidget->setColumnWidth(0,80);
     this->ui->tableWidget->setColumnWidth(1,80);
 
-    //Aqui so criados os objetos necessarios para setar os nomes da colunas
     QTableWidgetItem* qtwi = new QTableWidgetItem(QString("X"),QTableWidgetItem::Type);
     this->ui->tableWidget->setHorizontalHeaderItem(0,qtwi);
     QTableWidgetItem* qtwi2 = new QTableWidgetItem(QString("Y"),QTableWidgetItem::Type);
@@ -75,14 +73,7 @@ void AddObjects::on_pushButtonPolygon_clicked()
         QMessageBox::warning(this,"Erro","É necessário a inserção de um nome para o objeto!",QMessageBox::Ok);
     else
     {
-
-//        QColor strokeColor = this->qcolor;
-//        if(this->ui->checkBoxFill->isChecked())
-//            Controller::getInstance()->addPolygon(&name, vertices, strokeColor,true);
-//        else
-            //Controller::getInstance()->addPolygon(&name, vertices, strokeColor,false);
-            Controller::getInstance()->addPolygon(&name, vertices, false);
-
+        Controller::getInstance()->addPolygon(&name, vertices, false);
 
         //Limpa tabela e vertices
         vertices.clear();

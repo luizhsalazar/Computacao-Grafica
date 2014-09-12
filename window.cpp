@@ -16,6 +16,7 @@ Window::Window(QGraphicsView* drawWindow)
     this->xwmax = width;
     this->ywmax = height;
 
+    //Seta os valores de vup com xwmin, ywmin e ywmax
     this->vup << new Coordinate(this->xwmin, this->ywmin) << new Coordinate(this->xwmin, this->ywmax);
 
     this->viewport = new Viewport(450, drawWindow);
@@ -123,10 +124,13 @@ void Window::rotate(double angle)
 
     float* wc = this->getCenter();
 
+    //Coordenadas do centro da window
     float rx = wc[0];
     float ry = wc[1];
 
     Transform* t = Transform::getInstance();
+    //Aplicação da rotação de objetos sobre o centro (ponto arbitrário) da window
+    //na direçao contrária ao mundo
     t->rotateGeometricShape(new Line(coordA, coordB), -angle, rx, ry);
 
     QList<GeometricShape*> objectsToRotate = Controller::getInstance()->getGeometricShapes();
