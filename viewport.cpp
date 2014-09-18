@@ -71,7 +71,9 @@ void Viewport::drawPoint(Point* point)
     double ax = coordinate->getXAxisCoord();
     double ay = coordinate->getYAxisCoord();
 
-    currentScene->addLine(ax, ay, ax, ay, QPen(point->getStrokeColor()));
+    if(ax >= this->xwmin && ax <= this->xwmax && ay >= this->xwmin && ay <= this->xwmax){
+        currentScene->addLine(ax, ay, ax, ay, QPen(point->getStrokeColor()));
+    }
 }
 
 void Viewport::drawLine(Line *line)
