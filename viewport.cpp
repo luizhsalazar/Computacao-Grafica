@@ -84,7 +84,56 @@ void Viewport::drawLine(Line *line)
     double ay = coordA->getYAxisCoord();
     double by = coordB->getYAxisCoord();
 
-    currentScene->addLine(ax, ay, bx, by, QPen(line->getStrokeColor()));
+    //Line Clipping
+
+    OutCode outcode0 = computeOutCode(ax, ay);
+    OutCode outcode1 = computeOutCode(bx, by);
+
+    bool accept = false;
+
+    while (true) {
+        if (!(outcode0 | outcode1)) {
+            accept = true;
+            break;
+        } else if (outcode0 & outcode1) {
+            break;
+        } else {
+
+            double x, y;
+
+            OutCode outcodeOut = outcode0 ? outcode0 : outcode1;
+
+            if (outcodeOut & TOP) {
+                x = ax + (bx - ax) * (this->r_max - ay) / (by - ay);
+                y = this->r_max;
+            } else if (outcodeOut & BOTTOM) {
+                x = ax + (bx - ax) * (this->r_min - ay) / (by - ay);
+                y = this->r_min;
+            } else if (outcodeOut & RIGHT) {
+                y = ay + (by - ay) * (this->r_max - ax) / (bx - ax);
+                x = this->r_max;
+            } else if (outcodeOut & LEFT) {
+                y = ay + (by - ay) * (this->r_min - ax) / (bx - ax);
+                x = this->r_min;
+            }
+
+            if (outcodeOut == outcode0) {
+                ax = x;
+                ay = y;
+                outcode0 = computeOutCode(ax, ay);
+            } else {
+                bx = x;
+                by = y;
+                outcode1 = computeOutCode(bx, by);
+            }
+        }
+    }
+
+    //Line Clipping End
+
+    if(accept){
+        currentScene->addLine(ax, ay, bx, by, QPen(line->getStrokeColor()));
+    }
 }
 
 Coordinate* Viewport::transformCoordinate(Coordinate* coordinate) {
@@ -103,4 +152,21 @@ Coordinate* Viewport::transformCoordinate(Coordinate* coordinate) {
 void Viewport::updateScene()
 {
     this->drawWindow->setScene(currentScene);
+}
+
+OutCode Viewport::computeOutCode(double x, double y)
+{
+    OutCode code = INSIDE;
+
+    if (x < this->r_min)
+        code |= LEFT;
+    else if (x > this->r_max)
+        code |= RIGHT;
+
+    if (y < this->r_min)
+        code |= BOTTOM;
+    else if (y > this->r_max)
+        code |= TOP;
+
+    return code;
 }
