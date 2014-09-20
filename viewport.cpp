@@ -51,17 +51,65 @@ void Viewport::drawPolygon(Polygon* polygon)
 {
     QList<Coordinate*> vertices = polygon->getCoordinates();
 
-    int v_count = vertices.count();
+    QList<Line*> clipPolygon;
 
-    GeometricShapeFactory* gf = GeometricShapeFactory::getInstance();
+    GeometricShapeFactory* gsf = GeometricShapeFactory::getInstance();
 
-    for(int i = 0; i < v_count - 1; i++)
-    {
-        Line* line = gf->createLine(vertices.at(i), vertices.at(i + 1));
-        this->drawLine(line);
+    Coordinate* clipPolA = new Coordinate(this->r_min, this->r_min);
+    Coordinate* clipPolB = new Coordinate(this->r_min, this->r_max);
+    Coordinate* clipPolC = new Coordinate(this->r_max, this->r_max);
+    Coordinate* clipPolD = new Coordinate(this->r_max, this->r_min);
+
+    clipPolygon << gsf->createLine(clipPolA, clipPolD);
+    clipPolygon << gsf->createLine(clipPolD, clipPolC);
+    clipPolygon << gsf->createLine(clipPolC, clipPolB);
+    clipPolygon << gsf->createLine(clipPolB, clipPolA);
+
+    QList<Coordinate*> outputList;
+    foreach(Coordinate* v, vertices){
+        outputList.append(this->transformCoordinate(v));
     }
-    Line* line = gf->createLine(vertices.at(v_count - 1), vertices.at(0));
-    this->drawLine(line);
+
+    //Sutherland–Hodgman Clipping
+
+    OutCode clipEdgesOutcode[4] = {BOTTOM, RIGHT, TOP, LEFT};
+
+    QList<Coordinate*> inputList;
+    int count = 0;
+    foreach(Line* clipEdge, clipPolygon){
+        OutCode clipEdgeOutcode = clipEdgesOutcode[count];
+
+        inputList = outputList;
+        outputList.clear();
+        if(!inputList.empty()){
+            Coordinate* s = inputList.last();
+            foreach(Coordinate* e, inputList){
+                if(this->insideClipEdge(e, clipEdgeOutcode)){
+                    if(!this->insideClipEdge(s, clipEdgeOutcode)){
+                        Coordinate* c = clipEdge->computeIntersection(gsf->createLine(s, e));
+                        if(c != NULL)
+                            outputList.append(c);
+                    }
+                    outputList.append(e);
+                }else if(this->insideClipEdge(s, clipEdgeOutcode)){
+                    Coordinate* a = clipEdge->computeIntersection(gsf->createLine(s, e));
+                    if(a != NULL)
+                        outputList.append(a);
+                }
+                s = e;
+            }
+        }
+        count++;
+    }
+
+    QPolygonF pol;
+
+    foreach(Coordinate* coord, outputList)
+    {
+        pol << QPoint(coord->getXAxisCoord(),coord->getYAxisCoord());
+    }
+
+    currentScene->addPolygon(pol);
 }
 
 void Viewport::drawPoint(Point* point)
@@ -86,7 +134,7 @@ void Viewport::drawLine(Line *line)
     double ay = coordA->getYAxisCoord();
     double by = coordB->getYAxisCoord();
 
-    //Line Clipping
+    //Cohen-Sutherland Clipping
 
     OutCode outcode0 = computeOutCode(ax, ay);
     OutCode outcode1 = computeOutCode(bx, by);
@@ -131,8 +179,6 @@ void Viewport::drawLine(Line *line)
         }
     }
 
-    //Line Clipping End
-
     if(accept){
         currentScene->addLine(ax, ay, bx, by, QPen(line->getStrokeColor()));
     }
@@ -171,4 +217,32 @@ OutCode Viewport::computeOutCode(double x, double y)
         code |= TOP;
 
     return code;
+}
+
+bool Viewport::insideClipEdge(Coordinate* p, OutCode clipEdgeOutcode)
+{
+    float px = p->getXAxisCoord();
+    float py = p->getYAxisCoord();
+
+    OutCode outcode = this->computeOutCode(px, py);
+
+    if(outcode == INSIDE)
+        return true;
+    else{
+        if(clipEdgeOutcode == TOP){
+            if(outcode == 9 || outcode == 8 || outcode == 10)
+                return false;
+        }else if(clipEdgeOutcode == BOTTOM){
+            if(outcode == 5 || outcode == 4 || outcode == 6)
+                return false;
+        }else if(clipEdgeOutcode == RIGHT){
+            if(outcode == 10 || outcode == 2 || outcode == 6)
+                return false;
+        } else if(clipEdgeOutcode == LEFT){
+            if(outcode == 9 || outcode == 1 || outcode == 5)
+                return false;
+        }
+    }
+
+    return true;
 }

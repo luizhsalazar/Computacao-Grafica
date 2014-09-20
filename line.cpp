@@ -46,3 +46,24 @@ Line* Line::clone()
     l->setStrokeColor(this->getStrokeColor());
     return l;
 }
+
+Coordinate* Line::computeIntersection(Line* l){
+    float x1 = this->coordA->getXAxisCoord();
+    float y1 = this->coordA->getYAxisCoord();
+    float x2 = this->coordB->getXAxisCoord();
+    float y2 = this->coordB->getYAxisCoord();
+
+    float x3 = l->coordA->getXAxisCoord();
+    float y3 = l->coordA->getYAxisCoord();
+    float x4 = l->coordB->getXAxisCoord();
+    float y4 = l->coordB->getYAxisCoord();
+
+    float d = (x1-x2)*(y3-y4) - (y1-y2)*(x3-x4);
+    if (d == 0)
+        return (Coordinate*) 0;
+
+    float xi = ((x3-x4)*(x1*y2-y1*x2)-(x1-x2)*(x3*y4-y3*x4))/d;
+    float yi = ((y3-y4)*(x1*y2-y1*x2)-(y1-y2)*(x3*y4-y3*x4))/d;
+
+    return new Coordinate(xi,yi);
+}

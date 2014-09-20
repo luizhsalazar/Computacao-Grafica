@@ -19,6 +19,8 @@ public:
     void setCoordB(Coordinate*);
     QList<Coordinate*> getCoordinates();
     Line* clone();
+
+    Coordinate* computeIntersection(Line*);
 };
 
 #endif // LINE_H

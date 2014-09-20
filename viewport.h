@@ -29,6 +29,8 @@ private:
     void drawPoint(Point*);
     void drawPolygon(Polygon*);
 
+    bool insideClipEdge(Coordinate*, OutCode);
+
 public:
     Viewport(double, QGraphicsView*);
 
