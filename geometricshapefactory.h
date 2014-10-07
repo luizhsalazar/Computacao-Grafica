@@ -8,6 +8,8 @@
 #include <polygon.h>
 #include <coordinate.h>
 #include <QColor>
+#include <bezier.h>
+#include <bspline.h>
 
 class GeometricShapeFactory
 {
@@ -21,6 +23,8 @@ public:
     Line* createLine(Coordinate*, Coordinate*);
     Point* createPoint(QString*, double, double, QColor);
     Polygon* createPolygon(QString*, QList<Coordinate*>);
+    Bezier* createBezierCurve(QString*, QList<Coordinate*>);
+    Bspline* createBsplineCurve(QString*, QList<Coordinate*>);
 };
 
 #endif // GEOMETRICSHAPEFACTORY_H

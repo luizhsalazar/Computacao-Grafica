@@ -1,31 +1,31 @@
 #include "bspline.h"
 #include "transform.h"
 
-//Bspline::Bspline(QString* name, QList<Coordinate*> coordinates) : GeometricShape(BSPLINE)
-//{
-//    this->name = name;
-//    this->coordinates = coordinates;
-//}
+Bspline::Bspline(QString* name, QList<Coordinate*> coordinates) : GeometricShape(BSPLINE)
+{
+    this->name = name;
+    this->coordinates = coordinates;
+}
 
 QList<Coordinate*> Bspline::getCoordinates()
 {
     return this->coordinates;
 }
 
-//Bspline* Bspline::clone()
-//{
-//    QList<Coordinate*> coordinates;
+Bspline* Bspline::clone()
+{
+    QList<Coordinate*> coordinates;
 
-//    foreach(Coordinate* c, this->coordinates)
-//    {
-//        coordinates << new Coordinate(c->getXAxisCoord(), c->getYAxisCoord());
-//    }
+    foreach(Coordinate* c, this->coordinates)
+    {
+        coordinates << new Coordinate(c->getXAxisCoord(), c->getYAxisCoord());
+    }
 
-//    Bspline* curve = new Bspline(this->name, coordinates);
-//    curve->setStrokeColor(this->getStrokeColor());
+    Bspline* curve = new Bspline(this->name, coordinates);
+    curve->setStrokeColor(this->getStrokeColor());
 
-//    return curve;
-//}
+    return curve;
+}
 
 
 QList<Coordinate*> Bspline::generateCurveCoordinates()

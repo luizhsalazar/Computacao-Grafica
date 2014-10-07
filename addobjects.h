@@ -23,6 +23,7 @@ private:
     int count,countBs;
     QColorDialog *qColorDialog;
     QColor qcolor;
+    QList<Coordinate*> verticesBspline;
 
 private slots:
     void on_pushButtonCancel_5_clicked();
@@ -36,6 +37,12 @@ private slots:
     void on_pushButtonCancel_2_clicked();
     void on_pushButtonCancel_3_clicked();
 
+    void on_pushButtonBezier_clicked();
+
+    void on_pushButtonBspline_2_clicked();
+    void on_pushButtonAddCoordBspline_2_clicked();
+    void on_pushButtonDeleteRowBspline_2_clicked();
+    void on_pushButtonCancel_9_clicked();
 };
 
 #endif // ADDOBJECTS_H

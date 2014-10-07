@@ -164,3 +164,17 @@ void Controller::rotateWindow(double angle)
 {
     this->window->rotate(angle);
 }
+
+void Controller::addBezierCurve(QString* name, QList<Coordinate*> coordinates)
+{
+    Bezier* curve = GeometricShapeFactory::getInstance()->createBezierCurve(name, coordinates);
+    this->addGeometricShapeToDisplayFile(curve);
+    this->redraw();
+}
+
+void Controller::addBsplineCurve(QString* name, QList<Coordinate *> coordinates)
+{
+    Bspline* cspline = GeometricShapeFactory::getInstance()->createBsplineCurve(name,coordinates);
+    this->addGeometricShapeToDisplayFile(cspline);
+    this->redraw();
+}

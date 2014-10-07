@@ -26,6 +26,13 @@ AddObjects::AddObjects(QWidget *parent) :
     this->ui->tableWidget->setHorizontalHeaderItem(0,qtwi);
     QTableWidgetItem* qtwi2 = new QTableWidgetItem(QString("Y"),QTableWidgetItem::Type);
     this->ui->tableWidget->setHorizontalHeaderItem(1,qtwi2);
+
+    this->ui->tableWidgetBspline_2->insertColumn(0);
+    this->ui->tableWidgetBspline_2->insertColumn(1);
+    this->ui->tableWidgetBspline_2->setColumnWidth(0,80);
+    this->ui->tableWidgetBspline_2->setColumnWidth(1,80);
+    this->ui->tableWidgetBspline_2->setHorizontalHeaderItem(0,qtwi);
+    this->ui->tableWidgetBspline_2->setHorizontalHeaderItem(1,qtwi2);
 }
 
 AddObjects::~AddObjects()
@@ -130,6 +137,80 @@ void AddObjects::on_pushButtonCancel_4_clicked()
 }
 
 void AddObjects::on_pushButtonCancel_5_clicked()
+{
+    this->close();
+}
+
+void AddObjects::on_pushButtonBezier_clicked()
+{
+    QString name = this->ui->lineNameBezier->text();
+    if(name.isEmpty())
+        QMessageBox::warning(this,"Erro","O campo 'nome' e de preenchimento obrigatorio.",QMessageBox::Ok);
+    else
+    {
+
+        QList<Coordinate*> coordinates;
+        coordinates.append(new Coordinate(this->ui->SpinBoxBezierX1->value(),this->ui->SpinBoxBezierY1->value()));
+        coordinates.append(new Coordinate(this->ui->SpinBoxBezierX2->value(),this->ui->SpinBoxBezierY2->value()));
+        coordinates.append(new Coordinate(this->ui->SpinBoxBezierX3->value(),this->ui->SpinBoxBezierY3->value()));
+        coordinates.append(new Coordinate(this->ui->SpinBoxBezierX4->value(),this->ui->SpinBoxBezierY4->value()));
+
+        Controller::getInstance()->addBezierCurve(&name,coordinates);
+
+        this->close();
+    }
+}
+
+
+void AddObjects::on_pushButtonBspline_2_clicked()
+{
+    QString name = this->ui->lineNameBspline_2->text();
+    if(name.isEmpty())
+        QMessageBox::warning(this,"Erro","O campo 'nome' e de preenchimento obrigatorio.",QMessageBox::Ok);
+    else
+    {
+        if(verticesBspline.size()>=4)
+        {
+            Controller::getInstance()->addBsplineCurve(&name, verticesBspline);
+
+            //Limpa tabela e vertices
+            verticesBspline.clear();
+            this->ui->tableWidgetBspline_2->clear();
+            for(int i =countBs;i >= 0;i--)
+            {
+                this->ui->tableWidgetBspline_2->removeRow(i);
+            }
+            countBs = 0;
+            this->close();
+        }
+        else{
+             QMessageBox::warning(this,"Erro","Deve-se ter no mnimo 4 coordenadas.",QMessageBox::Ok);
+
+        }
+
+    }
+}
+
+void AddObjects::on_pushButtonAddCoordBspline_2_clicked()
+{
+    verticesBspline.append(new Coordinate(this->ui->SpinBoxBsplineX_2->value(),this->ui->SpinBoxBsplineY_2->value()));
+    this->ui->tableWidgetBspline_2->insertRow(countBs);
+
+    //Coloca as coordenadas na tabela
+    this->ui->tableWidgetBspline_2->setItem(countBs,0,new QTableWidgetItem(QString::number(this->ui->SpinBoxBsplineX_2->value())));
+    this->ui->tableWidgetBspline_2->setItem(countBs,1,new QTableWidgetItem(QString::number(this->ui->SpinBoxBsplineY_2->value())));
+    countBs++;
+
+}
+
+void AddObjects::on_pushButtonDeleteRowBspline_2_clicked()
+{
+    this->ui->tableWidgetBspline_2->removeRow(this->ui->tableWidgetBspline_2->currentRow());
+    verticesBspline.removeAt(this->ui->tableWidgetBspline_2->currentRow()-1);
+    countBs--;
+}
+
+void AddObjects::on_pushButtonCancel_9_clicked()
 {
     this->close();
 }

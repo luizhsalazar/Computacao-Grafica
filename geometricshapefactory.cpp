@@ -44,3 +44,18 @@ Polygon* GeometricShapeFactory::createPolygon(QString* name, QList<Coordinate*> 
     Polygon* polygon = new Polygon(name, vertices);
     return polygon;
 }
+
+Bezier* GeometricShapeFactory::createBezierCurve(QString* name, QList<Coordinate*> coordinates)
+{
+    Bezier* curve = new Bezier(name, coordinates);
+
+    return curve;
+}
+
+Bspline* GeometricShapeFactory::createBsplineCurve(QString * name, QList<Coordinate *> coordinates)
+{
+    Bspline* cspline = new Bspline(name,coordinates);
+
+
+    return cspline;
+}

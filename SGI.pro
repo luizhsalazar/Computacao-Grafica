@@ -19,7 +19,9 @@ SOURCES += main.cpp\
     coordinate.cpp \
     test.cpp \
     transform.cpp \
-    controller.cpp
+    controller.cpp \
+    bezier.cpp \
+    bspline.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -34,7 +36,9 @@ HEADERS  += mainwindow.h \
     coordinate.h \
     test.h \
     transform.h \
-    controller.h
+    controller.h \
+    bezier.h \
+    bspline.h
 
 FORMS    += mainwindow.ui \
     addobjects.ui

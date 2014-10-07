@@ -141,6 +141,11 @@ void MainWindow::on_pushButtonMove_clicked()
         }
 }
 
+void MainWindow::on_buttonLessZoom_2_clicked()
+{
+
+}
+
 void MainWindow::on_buttonRotacionarWindowLeft_clicked()
 {
     Controller::getInstance()->rotateWindow(-this->ui->rotateUnity->value());

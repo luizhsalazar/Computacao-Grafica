@@ -43,8 +43,46 @@ void Viewport::drawGeometricShape(GeometricShape* geometricShape)
     case POLYGON:
         this->drawPolygon((Polygon*)geometricShape);
         break;
+    case BEZIER:
+        this->drawBezierCurve((Bezier*)geometricShape);
+        break;
+    case BSPLINE:
+        this->drawBsplineCurve((Bspline*)geometricShape);
+        break;
     }
 
+}
+
+void Viewport::drawBezierCurve(Bezier* curve)
+{
+    QList<Coordinate*> coordinates = curve->generateCurveCoordinates();
+
+    int c_count = coordinates.count();
+
+    GeometricShapeFactory* gf = GeometricShapeFactory::getInstance();
+
+    for(int i = 0; i < c_count - 1; i++)
+    {
+        Line* line = gf->createLine(coordinates.at(i), coordinates.at(i + 1));
+        this->drawLine(line);
+    }
+}
+
+void Viewport::drawBsplineCurve(Bspline* cspline)
+{
+    QList<Coordinate*> coordinates = cspline->generateCurveCoordinates();
+
+    int c_count = coordinates.count();
+
+    GeometricShapeFactory* gf = GeometricShapeFactory::getInstance();
+
+    QColor strokeColor = cspline->getStrokeColor();
+
+    for(int i = 0; i < c_count - 1; i++)
+    {
+        Line* line = gf->createLine(coordinates.at(i), coordinates.at(i + 1), strokeColor);
+        this->drawLine(line);
+    }
 }
 
 void Viewport::drawPolygon(Polygon* polygon)

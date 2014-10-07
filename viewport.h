@@ -8,6 +8,8 @@
 #include <polygon.h>
 #include <geometricshape.h>
 #include <geometricshapefactory.h>
+#include <bezier.h>
+#include <bspline.h>
 
 #define OutCode int
 
@@ -28,6 +30,8 @@ private:
     void drawLine(Line*);
     void drawPoint(Point*);
     void drawPolygon(Polygon*);
+    void drawBezierCurve(Bezier*);
+    void drawBsplineCurve(Bspline*);
 
     bool insideClipEdge(Coordinate*, OutCode);
 

@@ -35,6 +35,8 @@ public:
     void addLine(QString*, double, double, double, double, QColor);
     void addPolygon(QString*, QList<Coordinate*>, bool);
     void addPoint(QString*, double, double, QColor);
+    void addBezierCurve(QString*, QList<Coordinate*>);
+    void addBsplineCurve(QString*, QList<Coordinate*>);
 
     void deleteGeometricShape(int);
 

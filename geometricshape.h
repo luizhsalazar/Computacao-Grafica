@@ -12,6 +12,8 @@ enum GeometricShapeType
     POINT   = 0,
     LINE    = 1,
     POLYGON = 2,
+    BEZIER = 3,
+    BSPLINE = 4
 };
 
 class GeometricShape
