@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<!-- 
+	Na presenca de mais de um objeto no arquivo, eh preciso envolver
+	os objetos em um elemento "formas"
+-->
+<formas>
+	<window>
+		<cop x="0.0" y="0.0" z="0.0"/>
+		<vpn x="0.0" y="0.0" z="1.0"/>
+		<vup x="0.0" y="1.0" z="0.0"/>
+		<wmin x="-10.0" y="-10.0" z="10.0"/>
+		<wmax x="10.0" y="10.0" z="10.0"/>
+	</window>
+	<ponto x="0.0" y="1.1" z="2.2"/>
+	<ponto x="0.1" y="0.2" z="0.3"/>
+	<reta>
+		<ponto x="11.0" y="12" z="13"/>
+		<ponto x="21" y="22.0" z="23"/>
+	</reta>
+	<reta>
+		<ponto x="-0.1" y="-0.2" z="-0.3"/>
+		<ponto x="-1.1" y="-1.2" z="-1.3"/>
+	</reta>
+	<objeto3d cor="FF0000">
+		<pontos>
+			<ponto x="1.0" y="0.0" z="0.0"/>
+			<ponto x="0.0" y="0.0" z="0.0"/>
+			<ponto x="0.0" y="1.0" z="0.0"/>
+			<ponto x="1.0" y="1.0" z="0.0"/>
+		</pontos>
+		<arestas>
+			<aresta v1="0" v2="1"/>
+			<aresta v1="1" v2="2"/>
+			<aresta v1="2" v2="3"/>
+			<aresta v1="3" v2="0"/>
+		</arestas>
+	</objeto3d>	
+</formas>

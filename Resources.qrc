@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/color--pencil.png</file>
+        <file>icons/cross.png</file>
+        <file>icons/minus-circle.png</file>
+        <file>icons/plus-circle.png</file>
+        <file>icons/tick-circle.png</file>
+        <file>icons/arrow.png</file>
+        <file>icons/arrow-090.png</file>
+        <file>icons/arrow-180.png</file>
+        <file>icons/arrow-270.png</file>
+        <file>icons/arrow-return.png</file>
+        <file>icons/arrow-return-180-left.png</file>
+        <file>icons/minus-button.png</file>
+        <file>icons/plus-button.png</file>
+        <file>icons/blue-document--arrow.png</file>
+    </qresource>
+</RCC>

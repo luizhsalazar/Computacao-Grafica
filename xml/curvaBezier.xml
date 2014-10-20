@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<formas>
+	<curvaBezier cor="A0FF00">
+		<!--
+			Uma curva de Bezier precisa de 4 pontos de controle
+			por vez
+		-->
+		<geometria>
+			<p1 x="1.0" y="0.0" z="0.0"/>
+			<p2 x="0.0" y="0.0" z="0.0"/>
+			<p3 x="0.0" y="1.0" z="0.0"/>
+			<p4 x="1.0" y="1.0" z="0.0"/>
+		</geometria>
+
+		<!-- geometrias adicionais sao possiveis
+		<geometria> ...
+		-->
+	</curvaBezier>
+</formas>

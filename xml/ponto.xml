@@ -1,0 +1,9 @@
+<!-- todo arquivo xml precisa desta diretiva de versao -->
+<?xml version="1.0" ?>
+<formas>
+	<!-- 
+		para pontos, x y e z sao atributos. A cor eh opcional e sua ausencia
+		significa cor preta (000000) (para todos os objetos)
+	-->
+	<ponto cor="FF0000" x="10.0" y="10.0" z="10.0" nome="ponto1"/>
+</formas>
