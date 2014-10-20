@@ -25,7 +25,8 @@ public:
     void zoomIn(int);
     void zoomOut(int);
     void move(int, mov_dir);
-//    void rotate(double);
+    void rotate(double);
+
     float* getCenter();
     float getAngle();
 };

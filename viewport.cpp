@@ -43,163 +43,111 @@ void Viewport::drawGeometricShape(GeometricShape* geometricShape)
     case POLYGON:
         this->drawPolygon((Polygon*)geometricShape);
         break;
-//    case BEZIER:
-//        this->drawBezierCurve((Bezier*)geometricShape);
-//        break;
-//    case BSPLINE:
-//        this->drawBsplineCurve((Bspline*)geometricShape);
-//        break;
+    case BEZIER:
+        this->drawBezierCurve((Bezier*)geometricShape);
+        break;
+    case BSPLINE:
+        this->drawBsplineCurve((Bspline*)geometricShape);
+        break;
     }
 
 }
 
-//void Viewport::drawBezierCurve(Bezier* curve)
-//{
-//    QList<Coordinate*> coordinates = curve->generateCurveCoordinates();
-
-//    int c_count = coordinates.count();
-
-//    GeometricShapeFactory* gf = GeometricShapeFactory::getInstance();
-
-//    QColor strokeColor = curve->getStrokeColor();
-
-//    for(int i = 0; i < c_count - 1; i++)
-//    {
-//        Line* line = gf->createLine(coordinates.at(i), coordinates.at(i + 1), strokeColor);
-//        this->drawLine(line);
-//    }
-//}
-
-//void Viewport::drawBsplineCurve(Bspline* cspline)
-//{
-//    QList<Coordinate*> coordinates = cspline->generateCurveCoordinates();
-
-//    int c_count = coordinates.count();
-
-//    GeometricShapeFactory* gf = GeometricShapeFactory::getInstance();
-
-//    QColor strokeColor = cspline->getStrokeColor();
-
-//    for(int i = 0; i < c_count - 1; i++)
-//    {
-//        Line* line = gf->createLine(coordinates.at(i), coordinates.at(i + 1), strokeColor);
-//        this->drawLine(line);
-//    }
-//}
-
-bool Viewport::insideClipEdge(Coordinate* p, OutCode clipEdgeOutcode)
+void Viewport::drawBezierCurve(Bezier* curve)
 {
-    float px = p->getXAxisCoord();
-    float py = p->getYAxisCoord();
+    QList<Coordinate*> coordinates = curve->generateCurveCoordinates();
 
-    OutCode outcode = this->computeOutCode(px, py);
+    int c_count = coordinates.count();
 
-    if(outcode == INSIDE)
-        return true;
-    else{
-        if(clipEdgeOutcode == TOP){
-            if(outcode == 9 || outcode == 8 || outcode == 10)
-                return false;
-        }else if(clipEdgeOutcode == BOTTOM){
-            if(outcode == 5 || outcode == 4 || outcode == 6)
-                return false;
-        }else if(clipEdgeOutcode == RIGHT){
-            if(outcode == 10 || outcode == 2 || outcode == 6)
-                return false;
-        } else if(clipEdgeOutcode == LEFT){
-            if(outcode == 9 || outcode == 1 || outcode == 5)
-                return false;
-        }
+    GeometricShapeFactory* gf = GeometricShapeFactory::getInstance();
+
+    for(int i = 0; i < c_count - 1; i++)
+    {
+        Line* line = gf->createLine(coordinates.at(i), coordinates.at(i + 1));
+        this->drawLine(line);
     }
+}
 
-    return true;
+void Viewport::drawBsplineCurve(Bspline* cspline)
+{
+    QList<Coordinate*> coordinates = cspline->generateCurveCoordinates();
+
+    int c_count = coordinates.count();
+
+    GeometricShapeFactory* gf = GeometricShapeFactory::getInstance();
+
+    QColor strokeColor = cspline->getStrokeColor();
+
+    for(int i = 0; i < c_count - 1; i++)
+    {
+        Line* line = gf->createLine(coordinates.at(i), coordinates.at(i + 1), strokeColor);
+        this->drawLine(line);
+    }
 }
 
 void Viewport::drawPolygon(Polygon* polygon)
 {
     QList<Coordinate*> vertices = polygon->getCoordinates();
 
-    int v_count = vertices.count();
+    QList<Line*> clipPolygon;
 
-    GeometricShapeFactory* gf = GeometricShapeFactory::getInstance();
+    GeometricShapeFactory* gsf = GeometricShapeFactory::getInstance();
 
-//    QColor strokeColor = polygon->getStrokeColor();
+    Coordinate* clipPolA = new Coordinate(this->r_min, this->r_min);
+    Coordinate* clipPolB = new Coordinate(this->r_min, this->r_max);
+    Coordinate* clipPolC = new Coordinate(this->r_max, this->r_max);
+    Coordinate* clipPolD = new Coordinate(this->r_max, this->r_min);
 
-    if(polygon->isFilled())
-    {
-        QList<Line*> clipPolygon;
+    clipPolygon << gsf->createLine(clipPolA, clipPolD);
+    clipPolygon << gsf->createLine(clipPolD, clipPolC);
+    clipPolygon << gsf->createLine(clipPolC, clipPolB);
+    clipPolygon << gsf->createLine(clipPolB, clipPolA);
 
-        GeometricShapeFactory* gsf = GeometricShapeFactory::getInstance();
+    QList<Coordinate*> outputList;
+    foreach(Coordinate* v, vertices){
+        outputList.append(this->transformCoordinate(v));
+    }
 
-        Coordinate* clipPolA = new Coordinate(this->r_min, this->r_min);
-        Coordinate* clipPolB = new Coordinate(this->r_min, this->r_max);
-        Coordinate* clipPolC = new Coordinate(this->r_max, this->r_max);
-        Coordinate* clipPolD = new Coordinate(this->r_max, this->r_min);
+    //Sutherland–Hodgman Clipping
 
-        clipPolygon << gsf->createLine(clipPolA, clipPolD);
-        clipPolygon << gsf->createLine(clipPolD, clipPolC);
-        clipPolygon << gsf->createLine(clipPolC, clipPolB);
-        clipPolygon << gsf->createLine(clipPolB, clipPolA);
+    OutCode clipEdgesOutcode[4] = {BOTTOM, RIGHT, TOP, LEFT};
 
-        QList<Coordinate*> outputList;
-        foreach(Coordinate* v, vertices){
-            outputList.append(this->transformCoordinate(v));
-        }
+    QList<Coordinate*> inputList;
+    int count = 0;
+    foreach(Line* clipEdge, clipPolygon){
+        OutCode clipEdgeOutcode = clipEdgesOutcode[count];
 
-        OutCode clipEdgesOutcode[4] = {BOTTOM, RIGHT, TOP, LEFT};
-
-        QList<Coordinate*> inputList;
-        int count = 0;
-        foreach(Line* clipEdge, clipPolygon){
-            OutCode clipEdgeOutcode = clipEdgesOutcode[count];
-
-            inputList = outputList;
-            outputList.clear();
-            if(!inputList.empty()){
-                Coordinate* s = inputList.last();
-
-                foreach(Coordinate* e, inputList){
-
-                    if(this->insideClipEdge(e, clipEdgeOutcode)){
-                        if(!this->insideClipEdge(s, clipEdgeOutcode)){
-                            Coordinate* c = clipEdge->computeIntersection(gsf->createLine(s, e));
-                            if(c != NULL)
-                                outputList.append(c);
-                        }
-                        outputList.append(e);
-                    }else if(this->insideClipEdge(s, clipEdgeOutcode)){
-                        Coordinate* a = clipEdge->computeIntersection(gsf->createLine(s, e));
-                        if(a != NULL)
-                            outputList.append(a);
+        inputList = outputList;
+        outputList.clear();
+        if(!inputList.empty()){
+            Coordinate* s = inputList.last();
+            foreach(Coordinate* e, inputList){
+                if(this->insideClipEdge(e, clipEdgeOutcode)){
+                    if(!this->insideClipEdge(s, clipEdgeOutcode)){
+                        Coordinate* c = clipEdge->computeIntersection(gsf->createLine(s, e));
+                        if(c != NULL)
+                            outputList.append(c);
                     }
-                    s = e;
+                    outputList.append(e);
+                }else if(this->insideClipEdge(s, clipEdgeOutcode)){
+                    Coordinate* a = clipEdge->computeIntersection(gsf->createLine(s, e));
+                    if(a != NULL)
+                        outputList.append(a);
                 }
+                s = e;
             }
-            count++;
         }
-
-        QPolygonF pol;
-
-        foreach(Coordinate* coord, outputList)
-        {
-            pol << QPoint(coord->getXAxisCoord(),coord->getYAxisCoord());
-        }
-
-        QPen pen;
-        pen.setColor(polygon->getStrokeColor());
-
-        currentScene->addPolygon(pol,pen,pen.brush());
+        count++;
     }
-    else
+
+    QPolygonF pol;
+
+    foreach(Coordinate* coord, outputList)
     {
-        for(int i = 0; i < v_count - 1; i++)
-        {
-            Line* line = gf->createLine(vertices.at(i), vertices.at(i + 1));
-            this->drawLine(line);
-        }
-        Line* line = gf->createLine(vertices.at(v_count - 1), vertices.at(0));
-        this->drawLine(line);
+        pol << QPoint(coord->getXAxisCoord(),coord->getYAxisCoord());
     }
+
+    currentScene->addPolygon(pol);
 }
 
 void Viewport::drawPoint(Point* point)
@@ -209,7 +157,9 @@ void Viewport::drawPoint(Point* point)
     double ax = coordinate->getXAxisCoord();
     double ay = coordinate->getYAxisCoord();
 
-    currentScene->addLine(ax, ay, ax, ay, QPen(point->getStrokeColor()));
+    if(ax >= this->xwmin && ax <= this->xwmax && ay >= this->xwmin && ay <= this->xwmax){
+        currentScene->addLine(ax, ay, ax, ay, QPen(point->getStrokeColor()));
+    }
 }
 
 void Viewport::drawLine(Line *line)
@@ -222,7 +172,7 @@ void Viewport::drawLine(Line *line)
     double ay = coordA->getYAxisCoord();
     double by = coordB->getYAxisCoord();
 
-    //Line Clipping
+    //Cohen-Sutherland Clipping
 
     OutCode outcode0 = computeOutCode(ax, ay);
     OutCode outcode1 = computeOutCode(bx, by);
@@ -267,11 +217,9 @@ void Viewport::drawLine(Line *line)
         }
     }
 
-    //Line Clipping End
     if(accept){
         currentScene->addLine(ax, ay, bx, by, QPen(line->getStrokeColor()));
     }
-
 }
 
 Coordinate* Viewport::transformCoordinate(Coordinate* coordinate) {
@@ -309,6 +257,30 @@ OutCode Viewport::computeOutCode(double x, double y)
     return code;
 }
 
+bool Viewport::insideClipEdge(Coordinate* p, OutCode clipEdgeOutcode)
+{
+    float px = p->getXAxisCoord();
+    float py = p->getYAxisCoord();
 
+    OutCode outcode = this->computeOutCode(px, py);
 
+    if(outcode == INSIDE)
+        return true;
+    else{
+        if(clipEdgeOutcode == TOP){
+            if(outcode == 9 || outcode == 8 || outcode == 10)
+                return false;
+        }else if(clipEdgeOutcode == BOTTOM){
+            if(outcode == 5 || outcode == 4 || outcode == 6)
+                return false;
+        }else if(clipEdgeOutcode == RIGHT){
+            if(outcode == 10 || outcode == 2 || outcode == 6)
+                return false;
+        } else if(clipEdgeOutcode == LEFT){
+            if(outcode == 9 || outcode == 1 || outcode == 5)
+                return false;
+        }
+    }
 
+    return true;
+}

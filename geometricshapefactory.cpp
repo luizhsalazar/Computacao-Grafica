@@ -42,20 +42,20 @@ Point* GeometricShapeFactory::createPoint(QString* name, double ax, double ay, Q
 Polygon* GeometricShapeFactory::createPolygon(QString* name, QList<Coordinate*> vertices)
 {
     Polygon* polygon = new Polygon(name, vertices);
-    //polygon->setStrokeColor(strokeColor);
     return polygon;
 }
 
-//Bezier* GeometricShapeFactory::createBezierCurve(QString* name, QList<Coordinate*> coordinates, QColor strokeColor)
-//{
-//    Bezier* curve = new Bezier(name, coordinates);
-//    curve->setStrokeColor(strokeColor);
-//    return curve;
-//}
+Bezier* GeometricShapeFactory::createBezierCurve(QString* name, QList<Coordinate*> coordinates)
+{
+    Bezier* curve = new Bezier(name, coordinates);
 
-//Bspline* GeometricShapeFactory::createBsplineCurve(QString * name, QList<Coordinate *> coordinates, QColor strokeColor)
-//{
-//    Bspline* cspline = new Bspline(name,coordinates);
-//    cspline->setStrokeColor(strokeColor);
-//    return cspline;
-//}
+    return curve;
+}
+
+Bspline* GeometricShapeFactory::createBsplineCurve(QString * name, QList<Coordinate *> coordinates)
+{
+    Bspline* cspline = new Bspline(name,coordinates);
+
+
+    return cspline;
+}

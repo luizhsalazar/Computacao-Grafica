@@ -33,6 +33,13 @@ private slots:
     void on_deleteButton_clicked();
 
     void on_actionAddObjeto_triggered();
+    void on_pushButtonScale_clicked();
+    void on_pushButtonRotate_clicked();
+    void on_pushButtonMove_clicked();
+    void on_buttonLessZoom_2_clicked();
+    void on_buttonRotacionarWindowLeft_clicked();
+    void on_buttonRotacionarWindowRight_clicked();
+    void on_rotateUnity_editingFinished();
 };
 
 #endif // MAINWINDOW_H

@@ -1,5 +1,5 @@
-#ifndef MEDIATOR_H
-#define MEDIATOR_H
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
 
 #include <QList>
 #include <mainwindow.h>
@@ -11,7 +11,7 @@
 #include <coordinate.h>
 using namespace std;
 
-class Mediator
+class Controller
 {
 private:    
     //Variables    
@@ -20,38 +20,38 @@ private:
     DisplayFile *displayFile;
 
     //Methods
-    Mediator();
+    Controller();
     void addGeometricShapeToDisplayFile(GeometricShape*);
 
 public:
-    ~Mediator();
+    ~Controller();
 
     QList<GeometricShape*> getGeometricShapes();
     QList<GeometricShape*> getCppGeometricShapes();
 
-    static Mediator* getInstance();
-    static Mediator* init();
+    static Controller* getInstance();
+    static Controller* init();
 
     void addLine(QString*, double, double, double, double, QColor);
     void addPolygon(QString*, QList<Coordinate*>, bool);
-//    void addBezierCurve(QString*, QList<Coordinate*>, QColor);
-//    void addBsplineCurve(QString*, QList<Coordinate*>, QColor);
     void addPoint(QString*, double, double, QColor);
+    void addBezierCurve(QString*, QList<Coordinate*>);
+    void addBsplineCurve(QString*, QList<Coordinate*>);
 
     void deleteGeometricShape(int);
 
-//    void moveObject(int,double,double);
-//    void resizeObject(int,double,double);
-//    void rotateObject(int,int, rotateType);
-//    void rotateObject(int,int,double,double);
+    void resizeObject(int,double,double);
+    void rotateObject(int,int, rotateType);
+    void rotateObject(int,int,double,double);
+    void moveObject(int,double,double);
 
     void zoomInWindow(int);
     void zoomOutWindow(int);
     void moveWindowVertical(int);
     void moveWindowHorizontal(int);
-//    void rotateWindow(double);
+    void rotateWindow(double);
 
     void redraw();
 };
 
-#endif // MEDIATOR_H
+#endif // CONTROLLER_H

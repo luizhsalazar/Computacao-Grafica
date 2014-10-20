@@ -8,14 +8,16 @@
 #include <polygon.h>
 #include <geometricshape.h>
 #include <geometricshapefactory.h>
+#include <bezier.h>
+#include <bspline.h>
 
 #define OutCode int
 
 const int INSIDE = 0; // 0000
-const int LEFT   = 1;   // 0001
-const int RIGHT  = 2;  // 0010
+const int LEFT   = 1; // 0001
+const int RIGHT  = 2; // 0010
 const int BOTTOM = 4; // 0100
-const int TOP    = 8;    // 1000
+const int TOP    = 8; // 1000
 
 class Viewport
 {
@@ -30,6 +32,7 @@ private:
     void drawPolygon(Polygon*);
     void drawBezierCurve(Bezier*);
     void drawBsplineCurve(Bspline*);
+
     bool insideClipEdge(Coordinate*, OutCode);
 
 public:
@@ -43,8 +46,6 @@ public:
     OutCode computeOutCode(double, double);
 
     void updateScene();
-
-
 };
 
 #endif // VIEWPORT_H

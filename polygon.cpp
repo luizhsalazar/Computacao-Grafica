@@ -28,17 +28,6 @@ Polygon* Polygon::clone()
 
     Polygon* p = new Polygon(this->name, vertices);
     p->setStrokeColor(this->getStrokeColor());
-    p->setFill(this->isFilled());
 
     return p;
-}
-
-bool Polygon::isFilled()
-{
-    return fill;
-}
-
-void Polygon::setFill(bool flag)
-{
-    this->fill = flag;
 }

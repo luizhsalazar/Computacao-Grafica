@@ -1,33 +1,35 @@
 #include "bezier.h"
 
-//Bezier::Bezier(QString* name, QList<Coordinate*> coordinates) : GeometricShape(BEZIER)
-//{
-//    this->name = name;
-//    this->coordinates = coordinates;
-//}
+Bezier::Bezier(QString* name, QList<Coordinate*> coordinates) : GeometricShape(BEZIER)
+{
+    this->name = name;
+    this->coordinates = coordinates;
+}
 
 QList<Coordinate*> Bezier::getCoordinates()
 {
     return this->coordinates;
 }
 
-//Bezier* Bezier::clone()
-//{
-//    QList<Coordinate*> coordinates;
+Bezier* Bezier::clone()
+{
 
-//    foreach(Coordinate* c, this->coordinates)
-//    {
-//        coordinates << new Coordinate(c->getXAxisCoord(), c->getYAxisCoord());
-//    }
+    QList<Coordinate*> coordinates;
 
-//    Bezier* curve = new Bezier(this->name, coordinates);
-//    curve->setStrokeColor(this->getStrokeColor());
+    foreach(Coordinate* c, this->coordinates)
+    {
+        coordinates << new Coordinate(c->getXAxisCoord(), c->getYAxisCoord());
+    }
 
-//    return curve;
-//}
+    Bezier* curve = new Bezier(this->name, coordinates);
+
+
+    return curve;
+}
 
 QList<Coordinate*> Bezier::generateCurveCoordinates()
 {
+
     QList<Coordinate*> coords;
 
     if(this->coordinates.count() >= 4){

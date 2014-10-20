@@ -44,7 +44,7 @@ GeometricShape* GeometricShape::clone()
 
 void GeometricShape::calcCpp(double angle, double rx, double ry)
 {
-//    Transform* t = Transform::getInstance();
-//    t->setType(ORIGIN);
-//    t->rotateGeometricShape(this, angle, rx, ry);
+    Transform* t = Transform::getInstance();
+    t->setType(ORIGIN);
+    t->rotateGeometricShape(this, angle, rx, ry);
 }

@@ -38,6 +38,15 @@ QList<Coordinate*> Line::getCoordinates()
     return coordinates;
 }
 
+Line* Line::clone()
+{
+    Coordinate* coordA = new Coordinate(this->coordA->getXAxisCoord(), this->coordA->getYAxisCoord());
+    Coordinate* coordB = new Coordinate(this->coordB->getXAxisCoord(), this->coordB->getYAxisCoord());
+    Line* l = new Line(this->name, coordA, coordB);
+    l->setStrokeColor(this->getStrokeColor());
+    return l;
+}
+
 Coordinate* Line::computeIntersection(Line* l){
     float x1 = this->coordA->getXAxisCoord();
     float y1 = this->coordA->getYAxisCoord();
@@ -57,13 +66,4 @@ Coordinate* Line::computeIntersection(Line* l){
     float yi = ((y3-y4)*(x1*y2-y1*x2)-(y1-y2)*(x3*y4-y3*x4))/d;
 
     return new Coordinate(xi,yi);
-}
-
-Line* Line::clone()
-{
-    Coordinate* coordA = new Coordinate(this->coordA->getXAxisCoord(), this->coordA->getYAxisCoord());
-    Coordinate* coordB = new Coordinate(this->coordB->getXAxisCoord(), this->coordB->getYAxisCoord());
-    Line* l = new Line(this->name, coordA, coordB);
-    l->setStrokeColor(this->getStrokeColor());
-    return l;
 }

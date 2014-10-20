@@ -19,18 +19,19 @@ void Transform::setType(rotateType type)
 
 void Transform::translateGeometricShape(GeometricShape* geometricShape, double dx, double dy)
 {
-    double matrix[3][3] = {{1,0,0},{0,1,0},{dx,dy,1}};
-    double answer[3] = {0,0,1};
-
+    double matriz[3][3] = {{1,0,0},{0,1,0},{dx,dy,1}};
+    double resultante[3] = {0,0,1};
 
     QList<Coordinate*> coordList = geometricShape->getCoordinates();
 
     foreach(Coordinate* coordinate, coordList)
     {
-        double mult[3] = {coordinate->getXAxisCoord(),coordinate->getYAxisCoord(),1};
-        multVetMatriz33(matrix,mult,answer);
-        coordinate->setXAxisCoord(answer[0]);
-        coordinate->setYAxisCoord(answer[1]);
+        double mult[3] = {coordinate->getXAxisCoord(),
+                          coordinate->getYAxisCoord(),
+                          1};
+        multVetMatriz3x3(matriz, mult, resultante);
+        coordinate->setXAxisCoord(resultante[0]);
+        coordinate->setYAxisCoord(resultante[1]);
     }
 }
 
@@ -55,10 +56,12 @@ QList<Coordinate*> Transform::calcScale(QList<Coordinate*> coordList,Coordinate*
 {
     double matrixScale[3][3] = {{sX,0,0},{0,sY,0},{0,0,1}};
     double matrix[3][3] = {{0,0,0},{0,0,0},{0,0,0}} ;
-    double answer[3];
-    double matrixTranslate[3][3] = {{1,0,0},{0,1,0},{-media->getXAxisCoord(),-media->getYAxisCoord(),1}};
+    double resultante[3];
+    double matrixTranslate[3][3] = {{1,0,0},{0,1,0},{-media->getXAxisCoord(),
+                                                     -media->getYAxisCoord(),
+                                                     1}};
 
-    QList<Coordinate*> answerCoord;
+    QList<Coordinate*> coordResultante;
     MatMultMat33(matrixTranslate, matrixScale,matrix);
     matrixTranslate[2][0] = -matrixTranslate[2][0];
     matrixTranslate[2][1] = -matrixTranslate[2][1];
@@ -67,20 +70,17 @@ QList<Coordinate*> Transform::calcScale(QList<Coordinate*> coordList,Coordinate*
     foreach(Coordinate* coordinate, coordList)
     {
         double vector[3] = {coordinate->getXAxisCoord(), coordinate->getYAxisCoord(), 1};
-        multVetMatriz33(matrixScale, vector, answer);
-        coordinate->setXAxisCoord(answer[0]);
-        coordinate->setYAxisCoord(answer[1]);
-        answerCoord.append(coordinate);
+        multVetMatriz3x3(matrixScale, vector, resultante);
+        coordinate->setXAxisCoord(resultante[0]);
+        coordinate->setYAxisCoord(resultante[1]);
+        coordResultante.append(coordinate);
     }
-    return answerCoord;
+    return coordResultante;
 }
-
-
 
 void Transform::rotateGeometricShape(GeometricShape* geometricShape, int angle)
 {
     QList<Coordinate*> coordList = geometricShape->getCoordinates();
-
 
     if(this->type == ORIGIN)
     {
@@ -90,11 +90,11 @@ void Transform::rotateGeometricShape(GeometricShape* geometricShape, int angle)
         double matrix[3][3] = {{coss,-sen,0},{sen,coss,0},{0,0,1}};
         foreach(Coordinate* coordinate, coordList)
         {
-            double answer[3];
+            double resultante[3];
             double vector[3] = {coordinate->getXAxisCoord(), coordinate->getYAxisCoord(), 1};
-            multVetMatriz33(matrix, vector, answer);
-            coordinate->setXAxisCoord(answer[0]);
-            coordinate->setYAxisCoord(answer[1]);
+            multVetMatriz3x3(matrix, vector, resultante);
+            coordinate->setXAxisCoord(resultante[0]);
+            coordinate->setYAxisCoord(resultante[1]);
 
         }
     }
@@ -109,9 +109,7 @@ void Transform::rotateGeometricShape(GeometricShape* geometricShape, int angle)
             coordinate->setYAxisCoord(coordinate->getYAxisCoord());
         }
     }
-
 }
-
 
 void Transform::rotateGeometricShape(GeometricShape* geometricShape, int angle, double rX, double rY)
 {
@@ -128,7 +126,6 @@ void Transform::rotateGeometricShape(GeometricShape* geometricShape, int angle, 
     }
 }
 
-
 QList<Coordinate*> Transform::calcRotation(QList<Coordinate*> coordList, Coordinate* vector, int angle)
 {
     double rad = angle * M_PI/180;
@@ -137,8 +134,8 @@ QList<Coordinate*> Transform::calcRotation(QList<Coordinate*> coordList, Coordin
     double matrixRotation[3][3] = {{coss,-sen,0},{sen,coss,0},{0,0,1}};
     double matrix[3][3] = {{0,0,0},{0,0,0},{0,0,0}} ;
     double matrixTranslate[3][3] = {{1,0,0},{0,1,0},{-vector->getXAxisCoord(),-vector->getYAxisCoord(),1}};
-    double answer[3];
-    QList<Coordinate*> answerCoord;
+    double resultante[3];
+    QList<Coordinate*> coordResultante;
     MatMultMat33(matrixTranslate, matrixRotation,matrix);
     matrixTranslate[2][0] = -matrixTranslate[2][0];
     matrixTranslate[2][1] = -matrixTranslate[2][1];
@@ -146,26 +143,24 @@ QList<Coordinate*> Transform::calcRotation(QList<Coordinate*> coordList, Coordin
     foreach(Coordinate* coordinate, coordList)
     {
         double vector[3] = {coordinate->getXAxisCoord(), coordinate->getYAxisCoord(), 1};
-        multVetMatriz33(matrixRotation, vector, answer);
-        coordinate->setXAxisCoord(answer[0]);
-        coordinate->setYAxisCoord(answer[1]);
-        answerCoord.append(coordinate);
+        multVetMatriz3x3(matrixRotation, vector, resultante);
+        coordinate->setXAxisCoord(resultante[0]);
+        coordinate->setYAxisCoord(resultante[1]);
+        coordResultante.append(coordinate);
     }
-    return answerCoord;
+    return coordResultante;
 }
 
-
-void Transform::multVetMatriz33(double matrix[3][3], double vector[3], double answer[3])
+void Transform::multVetMatriz3x3(double matriz[3][3], double vector[3], double resultante[3])
 {
     for (int i = 0; i < 3; i++) {
-        answer[i] = 0;
+        resultante[i] = 0;
         for (int j = 0; j < 3; j++) {
-            answer[i] += vector[j] * matrix[j][i];
+            resultante[i] += vector[j] * matriz[j][i];
         }
     }
 
 }
-
 
 void Transform::MatMultMat33(double mat1[3][3], double mat2[3][3], double matAns[3][3])
 {
@@ -194,7 +189,6 @@ void Transform::MatMultMat42 (double Mat1[4][4], double Mat2[4][2], double matAn
                matAns[n][m] += Mat1[n][p] * Mat2[p][m];
 }
 
-
 Coordinate* Transform::calcMedia(QList<Coordinate*> coordList)
 {
 
@@ -215,10 +209,3 @@ Coordinate* Transform::calcMedia(QList<Coordinate*> coordList)
     return coord;
 
 }
-
-
-
-
-
-
-

@@ -1,9 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2014-08-19T21:45:19
-#
-#-------------------------------------------------
-
 QT       += core gui
 QT       += widgets
 
@@ -11,10 +5,8 @@ QT       += widgets
 TARGET = SGI
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
         mainwindow.cpp \
-    mediator.cpp \
     window.cpp \
     viewport.cpp \
     point.cpp \
@@ -26,10 +18,12 @@ SOURCES += main.cpp\
     addobjects.cpp \
     coordinate.cpp \
     test.cpp \
-    transform.cpp
+    transform.cpp \
+    controller.cpp \
+    bezier.cpp \
+    bspline.cpp
 
 HEADERS  += mainwindow.h \
-    mediator.h \
     window.h \
     viewport.h \
     point.h \
@@ -41,7 +35,10 @@ HEADERS  += mainwindow.h \
     addobjects.h \
     coordinate.h \
     test.h \
-    transform.h
+    transform.h \
+    controller.h \
+    bezier.h \
+    bspline.h
 
 FORMS    += mainwindow.ui \
     addobjects.ui

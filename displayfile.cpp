@@ -9,10 +9,10 @@ void DisplayFile::addGeometricShape(GeometricShape * geometricShape, float wa, f
 {
     this->geometricShapes.append(geometricShape);
 
-    GeometricShape* cloneGs = geometricShape->clone();
-    cloneGs->calcCpp(wa, wc[0], wc[1]);
+    GeometricShape* cloneGeometricShape = geometricShape->clone();
+    cloneGeometricShape->calcCpp(wa, wc[0], wc[1]);
 
-    this->cppGeometricShapes.append(cloneGs);
+    this->cppGeometricShapes.append(cloneGeometricShape);
 }
 
 void DisplayFile::deleteGeometricShape(int index)
