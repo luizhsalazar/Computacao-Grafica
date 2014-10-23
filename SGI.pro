@@ -10,7 +10,6 @@ TARGET = SGI
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    mediator.cpp \
     window.cpp \
     viewport.cpp \
     point.cpp \
@@ -34,13 +33,13 @@ SOURCES += main.cpp \
     face.cpp \
     objparser.cpp \
     drawspot.cpp \
-    xmlloader.cpp \
     tinyxml/tinyxmlparser.cpp \
     tinyxml/tinyxmlerror.cpp \
     tinyxml/tinyxml.cpp \
-    tinyxml/tinystr.cpp
+    tinyxml/tinystr.cpp \
+    controller.cpp
 HEADERS += mainwindow.h \
-    mediator.h \
+    controller.h \
     window.h \
     viewport.h \
     point.h \
@@ -64,7 +63,6 @@ HEADERS += mainwindow.h \
     face.h \
     objparser.h \
     drawspot.h \
-    xmlloader.h \
     tinyxml/tinyxml.h \
     tinyxml/tinystr.h \
     tinyxml/tinyxml.h \
@@ -91,5 +89,5 @@ OTHER_FILES += Rot-Esq.png \
     tinyxml/echo.dsp \
     tinyxml/changes.txt \
     xml/ponto.xml
-RESOURCES += Resources.qrc
+RESOURCES +=
 

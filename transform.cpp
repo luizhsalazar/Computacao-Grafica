@@ -40,6 +40,9 @@ void Transform::transform(Coordinate3D *c, float m[4][4])
 }
 
 Shape3D* Transform::project(Shape3D* shapeOriginal, Coordinate3D *t, Coordinate3D *s, Coordinate3D *vpn, Coordinate3D *vup) {
+
+    printf("tx: %f, ty: %f, tz: %f\n",t->getX(), t->getY(), t->getZ());
+
     float matrix[4][4];
     getTransformationMatrix(t, s, vpn, vup, matrix);
     Shape3D* clone = shapeOriginal->clone();

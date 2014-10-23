@@ -63,10 +63,6 @@
      <property name="text">
       <string>Delete</string>
      </property>
-     <property name="icon">
-      <iconset resource="Resources.qrc">
-       <normaloff>:/icons/minus-circle.png</normaloff>:/icons/minus-circle.png</iconset>
-     </property>
     </widget>
     <widget class="QListWidget" name="listObjects">
      <property name="geometry">
@@ -143,10 +139,6 @@
        </property>
        <property name="text">
         <string>OK</string>
-       </property>
-       <property name="icon">
-        <iconset resource="Resources.qrc">
-         <normaloff>:/icons/tick-circle.png</normaloff>:/icons/tick-circle.png</iconset>
        </property>
       </widget>
       <widget class="QLabel" name="label_3">
@@ -238,10 +230,6 @@
        </property>
        <property name="text">
         <string>OK</string>
-       </property>
-       <property name="icon">
-        <iconset resource="Resources.qrc">
-         <normaloff>:/icons/tick-circle.png</normaloff>:/icons/tick-circle.png</iconset>
        </property>
       </widget>
       <widget class="QDoubleSpinBox" name="scaleZ">
@@ -367,7 +355,7 @@
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>70</y>
+         <y>90</y>
          <width>71</width>
          <height>22</height>
         </rect>
@@ -383,7 +371,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>70</y>
+         <y>90</y>
          <width>20</width>
          <height>20</height>
         </rect>
@@ -409,34 +397,6 @@
        </property>
        <property name="text">
         <string>OK</string>
-       </property>
-       <property name="icon">
-        <iconset resource="Resources.qrc">
-         <normaloff>:/icons/tick-circle.png</normaloff>:/icons/tick-circle.png</iconset>
-       </property>
-      </widget>
-      <widget class="QDial" name="rotateObjDial">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>90</y>
-         <width>81</width>
-         <height>61</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <stylestrategy>PreferDefault</stylestrategy>
-        </font>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::WheelFocus</enum>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="wrapping">
-        <bool>true</bool>
        </property>
       </widget>
       <widget class="QFrame" name="rotationAxisObjWrapper">
@@ -732,27 +692,6 @@
      <property name="text">
       <string>Add</string>
      </property>
-     <property name="icon">
-      <iconset resource="Resources.qrc">
-       <normaloff>:/icons/plus-circle.png</normaloff>:/icons/plus-circle.png</iconset>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="loadXmlButton">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>180</y>
-       <width>101</width>
-       <height>27</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Load .xml</string>
-     </property>
-     <property name="icon">
-      <iconset resource="Resources.qrc">
-       <normaloff>:/icons/blue-document--arrow.png</normaloff>:/icons/blue-document--arrow.png</iconset>
-     </property>
     </widget>
    </widget>
    <widget class="QGraphicsView" name="draw_window">
@@ -859,10 +798,10 @@
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string>&gt;</string>
       </property>
       <property name="icon">
-       <iconset resource="Resources.qrc">
+       <iconset>
         <normaloff>:/icons/arrow.png</normaloff>:/icons/arrow.png</iconset>
       </property>
      </widget>
@@ -876,10 +815,10 @@
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string>&lt;</string>
       </property>
       <property name="icon">
-       <iconset resource="Resources.qrc">
+       <iconset>
         <normaloff>:/icons/arrow-180.png</normaloff>:/icons/arrow-180.png</iconset>
       </property>
      </widget>
@@ -893,10 +832,10 @@
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string>^ </string>
       </property>
       <property name="icon">
-       <iconset resource="Resources.qrc">
+       <iconset>
         <normaloff>:/icons/arrow-090.png</normaloff>:/icons/arrow-090.png</iconset>
       </property>
      </widget>
@@ -910,10 +849,10 @@
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string>v</string>
       </property>
       <property name="icon">
-       <iconset resource="Resources.qrc">
+       <iconset>
         <normaloff>:/icons/arrow-270.png</normaloff>:/icons/arrow-270.png</iconset>
       </property>
      </widget>
@@ -1003,10 +942,10 @@
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string>&lt;</string>
       </property>
       <property name="icon">
-       <iconset resource="Resources.qrc">
+       <iconset>
         <normaloff>:/icons/arrow-return-180-left.png</normaloff>:/icons/arrow-return-180-left.png</iconset>
       </property>
      </widget>
@@ -1038,10 +977,10 @@
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string>&gt;</string>
       </property>
       <property name="icon">
-       <iconset resource="Resources.qrc">
+       <iconset>
         <normaloff>:/icons/arrow-return.png</normaloff>:/icons/arrow-return.png</iconset>
       </property>
      </widget>
@@ -1211,10 +1150,10 @@
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string>&lt;</string>
       </property>
       <property name="icon">
-       <iconset resource="Resources.qrc">
+       <iconset>
         <normaloff>:/icons/plus-button.png</normaloff>:/icons/plus-button.png</iconset>
       </property>
      </widget>
@@ -1228,10 +1167,10 @@
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string>&gt;</string>
       </property>
       <property name="icon">
-       <iconset resource="Resources.qrc">
+       <iconset>
         <normaloff>:/icons/minus-button.png</normaloff>:/icons/minus-button.png</iconset>
       </property>
      </widget>
@@ -1303,7 +1242,7 @@
      <x>0</x>
      <y>0</y>
      <width>835</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
   </widget>
@@ -1346,8 +1285,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

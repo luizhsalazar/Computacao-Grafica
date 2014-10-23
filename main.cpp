@@ -1,11 +1,11 @@
 #include <QApplication>
 #include <QtWidgets>
-#include <mediator.h>
+#include <controller.h>
 #include <test.h>
 #include <iostream>
 #include <QDir>
 #include <QFileDialog>
-#include "xmlloader.h"
+
 
 bool fillPolygon;
 
@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    Mediator::init();
+    Controller::init();
 
    Test *t = new Test();
    t->run();

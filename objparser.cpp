@@ -1,5 +1,6 @@
  #include "objparser.h"
 
+
 #define MAX_LINE_SIZE 256
 
 ObjParser::ObjParser()
@@ -18,7 +19,9 @@ Polygon3D* ObjParser::getPolygon3D(char *objFilePath)
     if (obj)
     {
         while (fgets(buffer,MAX_LINE_SIZE,obj))
+        {
             getElement(buffer);
+        }
     }
 
     Shape3DFactory* sf = Shape3DFactory::getInstance();
@@ -28,12 +31,15 @@ Polygon3D* ObjParser::getPolygon3D(char *objFilePath)
 
 void ObjParser::getElement(char *buffer)
 {
+    printf("buffer[0]: %c\n", buffer[0]);
+
     switch(buffer[0])
     {
     case PARSED_ELEMENT_VERTEX:
         switch(buffer[1])
         {
         default:
+            printf("buffer[1]: %c\n", buffer[1]);
             readVertex(buffer);
         }
         break;
@@ -53,7 +59,7 @@ void ObjParser::getElement(char *buffer)
             case PARSED_ELEMENT_COMMENT:
             case PARSED_ELEMENT_MATERIAL:
             default:
-        //printf("%s",buffer);
+        printf("%s",buffer);
         break;
     }
 }
@@ -64,6 +70,9 @@ void ObjParser::readVertex(char *objString)
     float y;
     float z;
     sscanf(objString,"%*s %f %f %f\n",&x,&y,&z);
+
+    printf("%*s %f %f %f\n",&x,&y,&z);
+
     this->cList.append(new Coordinate3D(x,y,z));
 }
 
@@ -80,6 +89,8 @@ void ObjParser::readFace(char *objString)
     int a,b,c;
 
     sscanf(objString,"f %d %d %d\n", &a,&b,&c);
+
+    printf("f %d %d %d\n", &a,&b,&c);
 
     Face *f = new Face();
     f->appendCoordinate(this->cList.value(a-1));

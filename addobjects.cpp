@@ -5,7 +5,7 @@
 
 #include <QMessageBox>
 
-#include <mediator.h>
+#include <controller.h>
 
 AddObjects::AddObjects(QWidget *parent) :
         QDialog(parent),
@@ -52,7 +52,7 @@ void AddObjects::on_pushButtonPoint_clicked()
         QMessageBox::warning(this,"Erro","O campo 'nome' e de preenchimento obrigatorio.",QMessageBox::Ok);
     else
     {
-        Mediator::getInstance()->addPoint3D(name, ui->pointX->value(), ui->pointY->value(), ui->pointZ->value(), qcolor);
+        Controller::getInstance()->addPoint3D(name, ui->pointX->value(), ui->pointY->value(), ui->pointZ->value(), qcolor);
     }
 }
 
@@ -63,7 +63,7 @@ void AddObjects::on_pushButtonLine_clicked()
         QMessageBox::warning(this,"Erro","O campo 'nome' e de preenchimento obrigatorio.",QMessageBox::Ok);
     else
     {
-        Mediator::getInstance()->addLine3D(&name, ui->lineX1->value(), ui->lineY1->value(),
+        Controller::getInstance()->addLine3D(&name, ui->lineX1->value(), ui->lineY1->value(),
                                            ui->lineZ1->value(), ui->lineX2->value(),
                                            ui->lineY2->value(), ui->lineZ2->value(),
                                            this->qcolor);
@@ -167,8 +167,9 @@ void AddObjects::on_pushButtonPolygon_clicked()
             polFaces.append(new Face(faceCoords, this->qcolor));
         }
 
-        Mediator::getInstance()->addPolygon3D(name, polFaces, this->ui->checkBoxFill->isChecked());
+        Controller::getInstance()->addPolygon3D(name, polFaces, this->ui->checkBoxFill->isChecked());
     }
 }
+
 
 

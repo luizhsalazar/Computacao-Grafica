@@ -1,13 +1,12 @@
-#include "mediator.h"
-#include "xmlloader.h"
+#include "controller.h"
 
 /**
   SINGLETON CLASS
 */
 
-static Mediator* m_instance = 0;
+static Controller* m_instance = 0;
 
-Mediator::Mediator()
+Controller::Controller()
 {
     this->mainWindow = new MainWindow;
     this->window =  new Window(mainWindow->getDrawWindow());
@@ -15,75 +14,75 @@ Mediator::Mediator()
     mainWindow->show();
 }
 
-Mediator::~Mediator()
+Controller::~Controller()
 {
 
 }
 
-void Mediator::setProjectionType(projectionType type)
+void Controller::setProjectionType(projectionType type)
 {
     Transform::getInstance()->setProjectionType(type);
     this->redraw();
 }
 
-void Mediator::resetWindow()
+void Controller::resetWindow()
 {
     this->window->reset();
     this->redraw();
 }
 
-Mediator* Mediator::init()
+Controller* Controller::init()
 {
-    return Mediator::getInstance();
+    return Controller::getInstance();
 }
 
-Mediator* Mediator::getInstance()
+Controller* Controller::getInstance()
 {
     if(m_instance == 0)
-        m_instance = new Mediator();
+        m_instance = new Controller();
 
     return m_instance;
 }
 
-void Mediator::deleteShape3D(int index)
+void Controller::deleteShape3D(int index)
 {
     this->displayFile->deleteShape3D(index);
     this->redraw();
 }
 
-void Mediator::redraw()
+void Controller::redraw()
 {
     QList<Shape3D*> s = this->getCppShapes3D();
     this->window->redraw(s);
 }
 
-void Mediator::redraw2D()
+void Controller::redraw2D()
 {
     this->window->redraw2D(this->getCppGeometricShapes());
 }
 
-QList<Shape3D*> Mediator::getShapes3D()
+QList<Shape3D*> Controller::getShapes3D()
 {
     return this->displayFile->getShapes3D();
 }
 
-QList<Shape3D*> Mediator::getCppShapes3D()
+QList<Shape3D*> Controller::getCppShapes3D()
 {
     return this->displayFile->getCppShapes3D();
 }
 
-void Mediator::zoomWindow(float percent)
+void Controller::zoomWindow(float percent)
 {
     this->window->zoom(percent);
 }
 
-void Mediator::moveWindow(float variation, axis axis)
+void Controller::moveWindow(float variation, axis axis)
 {
     this->window->move(variation, axis);
 }
 
 
-void Mediator::moveObject(int index, float tx, float ty, float tz)
+void Controller::moveObject(int index, float tx, float ty, float tz)
 {
     QList<Shape3D*> shapeList = this->getShapes3D();
     QList<Shape3D*> cppShapeList = this->getCppShapes3D();
@@ -100,7 +99,7 @@ void Mediator::moveObject(int index, float tx, float ty, float tz)
     }
 }
 
-void Mediator::resizeObject(int index, float sx, float sy, float sz)
+void Controller::resizeObject(int index, float sx, float sy, float sz)
 {
     QList<Shape3D*> shapeList = this->getShapes3D();
     QList<Shape3D*> cppShapeList = this->getCppShapes3D();
@@ -118,7 +117,7 @@ void Mediator::resizeObject(int index, float sx, float sy, float sz)
     }
 }
 
-void Mediator::rotateObject(int index, int angle, axis axis, rotationType type)
+void Controller::rotateObject(int index, int angle, axis axis, rotationType type)
 {
     QList<Shape3D*> shapeList = this->getShapes3D();
     QList<Shape3D*> cppShapeList = this->getCppShapes3D();
@@ -140,7 +139,7 @@ void Mediator::rotateObject(int index, int angle, axis axis, rotationType type)
     }
 }
 
-void Mediator::rotateObject(int index, int angle, float rx, float ry, float rz, axis axis)
+void Controller::rotateObject(int index, int angle, float rx, float ry, float rz, axis axis)
 {
     QList<Shape3D*> shapeList = this->getShapes3D();
     QList<Shape3D*> cppShapeList = this->getCppShapes3D();
@@ -157,7 +156,7 @@ void Mediator::rotateObject(int index, int angle, float rx, float ry, float rz, 
     }
 }
 
-Coordinate3D* Mediator::getAxisVector(axis axis)
+Coordinate3D* Controller::getAxisVector(axis axis)
 {
     if(axis == X_AXIS)
         return new Coordinate3D(1,0,0);
@@ -167,26 +166,26 @@ Coordinate3D* Mediator::getAxisVector(axis axis)
         return new Coordinate3D(0,0,1);
 }
 
-void Mediator::rotateWindow(float angle, axis axis)
+void Controller::rotateWindow(float angle, axis axis)
 {
     this->window->rotate(angle, axis);
 }
 
-void Mediator::addShape3DToDisplayFile(Shape3D *s)
+void Controller::addShape3DToDisplayFile(Shape3D *s)
 {
     this->displayFile->addShape3D(s);
     this->mainWindow->addObjectName(s->getName());
     this->redraw();
 }
 
-void Mediator::addPoint3D(QString *name, float x, float y, float z, QColor strokeColor)
+void Controller::addPoint3D(QString *name, float x, float y, float z, QColor strokeColor)
 {
     Shape3DFactory *s = Shape3DFactory::getInstance();
     Point3D* p = s->createPoint3D(name, x, y, z, strokeColor);
     this->addShape3DToDisplayFile(p);
 }
 
-void Mediator::addLine3D(QString *name, float ax, float ay, float az, float bx, float by, float bz, QColor strokeColor)
+void Controller::addLine3D(QString *name, float ax, float ay, float az, float bx, float by, float bz, QColor strokeColor)
 {
     Shape3DFactory *s = Shape3DFactory::getInstance();
 
@@ -197,7 +196,7 @@ void Mediator::addLine3D(QString *name, float ax, float ay, float az, float bx, 
     this->addShape3DToDisplayFile(l);
 }
 
-void Mediator::addPolygon3D(QString *name, QList<Face*> faces, bool filled)
+void Controller::addPolygon3D(QString *name, QList<Face*> faces, bool filled)
 {
     Shape3DFactory *s = Shape3DFactory::getInstance();
     Polygon3D* p = s->createPolygon3D(name, faces);
@@ -205,43 +204,38 @@ void Mediator::addPolygon3D(QString *name, QList<Face*> faces, bool filled)
     this->addShape3DToDisplayFile(p);
 }
 
-void Mediator::addPolygon3D(Polygon3D* p)
+void Controller::addPolygon3D(Polygon3D* p)
 {
     this->addShape3DToDisplayFile(p);
 }
 
-void Mediator::addBezierCurve(QString* name, QList<Coordinate*> coordinates, QColor strokeColor)
+void Controller::addBezierCurve(QString* name, QList<Coordinate*> coordinates, QColor strokeColor)
 {
     Bezier* curve = GeometricShapeFactory::getInstance()->createBezierCurve(name, coordinates, strokeColor);
     this->addGeometricShapeToDisplayFile(curve);
     this->redraw2D();
 }
 
-void Mediator::addBsplineCurve(QString* name, QList<Coordinate *> coordinates, QColor strokeColor)
+void Controller::addBsplineCurve(QString* name, QList<Coordinate *> coordinates, QColor strokeColor)
 {
     Bspline* cspline = GeometricShapeFactory::getInstance()->createBsplineCurve(name,coordinates,strokeColor);
     this->addGeometricShapeToDisplayFile(cspline);
     this->redraw2D();
 }
 
-void Mediator::addGeometricShapeToDisplayFile(GeometricShape* geometricShape)
+void Controller::addGeometricShapeToDisplayFile(GeometricShape* geometricShape)
 {
 
     this->displayFile->addGeometricShape(geometricShape, 0 , this->window->getCenter2D());
     this->mainWindow->addObjectName(new QString("shape"));
 }
 
-QList<GeometricShape*> Mediator::getGeometricShapes()
+QList<GeometricShape*> Controller::getGeometricShapes()
 {
     return this->displayFile->getGeometricShapes();
 }
 
-QList<GeometricShape*> Mediator::getCppGeometricShapes()
+QList<GeometricShape*> Controller::getCppGeometricShapes()
 {
     return this->displayFile->getCppGeometricShapes();
-}
-
-void Mediator::loadObjFile(char* path)
-{
-    XMLLoader::loadXml(path);
 }

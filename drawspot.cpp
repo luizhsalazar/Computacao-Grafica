@@ -1,5 +1,5 @@
  #include "drawspot.h"
-#include "mediator.h"
+#include "controller.h"
 
 DrawSpot::DrawSpot(QWidget *qw)
 {    
@@ -29,7 +29,7 @@ void DrawSpot::mouseMoveEvent(QMouseEvent *e)
     int rx = 1;
     int ry = 1;
 
-    Mediator *m = Mediator::getInstance();
+    Controller *m = Controller::getInstance();
 
     if(mx != x){
         if(mx < x)

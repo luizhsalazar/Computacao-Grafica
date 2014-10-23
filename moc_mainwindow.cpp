@@ -147,7 +147,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     if (_c == QMetaObject::InvokeMetaMethod) {
         MainWindow *_t = static_cast<MainWindow *>(_o);
         switch (_id) {
-        case 0: _t->on_loadXmlButton_clicked(); break;
+
         case 1: _t->on_resetWindowButton_clicked(); break;
         case 2: _t->on_radioButton_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 3: _t->on_rotateObjDial_dialMoved((*reinterpret_cast< int(*)>(_a[1]))); break;

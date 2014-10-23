@@ -33,7 +33,7 @@ private slots:
 
 
 private slots:
-    void on_loadXmlButton_clicked();
+
     void on_resetWindowButton_clicked();
     void on_radioButton_toggled(bool checked);
     void on_rotateObjDial_dialMoved(int value);

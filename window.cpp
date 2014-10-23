@@ -1,6 +1,6 @@
 #include "window.h"
 
-#include <mediator.h>
+#include <controller.h>
 #include <stdio.h>
 
 Window::Window(QGraphicsView* drawWindow)
@@ -144,8 +144,9 @@ float* Window::getCenter2D()
 
 void Window::setupRedraw()
 {
-    Mediator *m = Mediator::getInstance();
+    Controller *m = Controller::getInstance();
     this->redraw(m->getCppShapes3D());
+//    this->redraw2D(m->getCppGeometricShapes());
 }
 
 void Window::reset()

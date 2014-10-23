@@ -37,7 +37,7 @@ void XMLLoader::constructOnePoint(TiXmlHandle hElem)
     QColor color = XMLLoader::getColor(texto);
     QString a = pElem->Attribute("nome");
 
-    Mediator *m = Mediator::getInstance();
+    Controller *m = Controller::getInstance();
 
     qDebug() << pElem->Attribute("nome");
     m->addPoint3D(new QString("ponto1"),x,y,z,color);
@@ -55,7 +55,7 @@ void XMLLoader::constructReta(TiXmlHandle hElem){
         pElem = pElem->NextSiblingElement("ponto");
         Point3D* p2 = constructPoint(*pElem);
 
-        Mediator *m = Mediator::getInstance();
+        Controller *m = Controller::getInstance();
         m->addLine3D(new QString("reta1"),p1->getX(),p1->getY(),p1->getZ(),p2->getX(),p2->getY(),p2->getZ(),color);
 }
 
@@ -138,7 +138,7 @@ void XMLLoader::constructPoligono(TiXmlHandle hElem){
 
         faces.append(f);
 
-        Mediator *m = Mediator::getInstance();
+        Controller *m = Controller::getInstance();
         m->addPolygon3D(new QString('pol'),faces,false);
 
         if(strcmp(e->Attribute("cheio"),"verdadeiro") == 0 ) {
@@ -192,7 +192,7 @@ void XMLLoader::constructObject3D(TiXmlHandle hElem) {
             faces.append(f);
     }
 
-    Mediator *m = Mediator::getInstance();
+    Controller *m = Controller::getInstance();
     m->addPolygon3D(new QString("obj3d"),faces,false);
 }
 
@@ -214,7 +214,7 @@ void XMLLoader::constructSpline(TiXmlHandle hElem){
             pontos.append(c);
         }
 
-        Mediator *m = Mediator::getInstance();
+        Controller *m = Controller::getInstance();
         m->addBsplineCurve(new QString("bSpline"),pontos,color);
 }
 
@@ -248,7 +248,7 @@ void XMLLoader::constructBezier(TiXmlHandle hElem){
               }
           }
       }
-      Mediator *m = Mediator::getInstance();
+      Controller *m = Controller::getInstance();
       m->addBezierCurve(new QString("bezier"),pontos,color);
 }
 
@@ -269,7 +269,7 @@ void XMLLoader::loadXml(char* path){
 
 QColor XMLLoader::getColor(char* cor) {
 
-    if(cor == NULL){ return QColor(255,255,255); }
+    if(cor == NULL){ return QColor(0,0,0); }
 
     std::stringstream ss;
     int R,G,B;

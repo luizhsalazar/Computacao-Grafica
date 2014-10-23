@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QListWidgetItem>
-#include <mediator.h>
+#include <controller.h>
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -46,32 +46,32 @@ void MainWindow::on_addObjButton_clicked()
 
 void MainWindow::on_buttonUp_clicked()
 {
-    Mediator::getInstance()->moveWindow(-this->ui->WindowControlSpeed->value(), Y_AXIS);
+    Controller::getInstance()->moveWindow(-this->ui->WindowControlSpeed->value(), Y_AXIS);
 }
 
 void MainWindow::on_buttonDown_clicked()
 {
-    Mediator::getInstance()->moveWindow(this->ui->WindowControlSpeed->value(), Y_AXIS);
+    Controller::getInstance()->moveWindow(this->ui->WindowControlSpeed->value(), Y_AXIS);
 }
 
 void MainWindow::on_buttonLeft_clicked()
 {
-    Mediator::getInstance()->moveWindow(this->ui->WindowControlSpeed->value(), X_AXIS);
+    Controller::getInstance()->moveWindow(this->ui->WindowControlSpeed->value(), X_AXIS);
 }
 
 void MainWindow::on_buttonRight_clicked()
 {
-    Mediator::getInstance()->moveWindow(-this->ui->WindowControlSpeed->value(), X_AXIS);
+    Controller::getInstance()->moveWindow(-this->ui->WindowControlSpeed->value(), X_AXIS);
 }
 
 void MainWindow::on_buttonFront_clicked()
 {
-    Mediator::getInstance()->moveWindow(-this->ui->WindowControlSpeed->value(), Z_AXIS);
+    Controller::getInstance()->moveWindow(-this->ui->WindowControlSpeed->value(), Z_AXIS);
 }
 
 void MainWindow::on_buttonBack_clicked()
 {
-    Mediator::getInstance()->moveWindow(this->ui->WindowControlSpeed->value(), Z_AXIS);
+    Controller::getInstance()->moveWindow(this->ui->WindowControlSpeed->value(), Z_AXIS);
 }
 
 void MainWindow::on_rotateWindowLeft_clicked()
@@ -86,7 +86,7 @@ void MainWindow::on_rotateWindowRight_clicked()
 
 void MainWindow::rotateWindow(int value)
 {
-    Mediator *m = Mediator::getInstance();
+    Controller *m = Controller::getInstance();
     if(this->ui->x_axis->isChecked()){
         m->rotateWindow(value, X_AXIS);
     }else if(this->ui->y_axis->isChecked()){
@@ -105,7 +105,7 @@ void MainWindow::on_rotateX_dialMoved(int value)
 
     this->currentDialXValue = value;
 
-    Mediator *m = Mediator::getInstance();
+    Controller *m = Controller::getInstance();
     m->rotateWindow(rotateValue, X_AXIS);
 }
 
@@ -118,7 +118,7 @@ void MainWindow::on_rotateY_dialMoved(int value)
 
     this->currentDialYValue = value;
 
-    Mediator *m = Mediator::getInstance();
+    Controller *m = Controller::getInstance();
     m->rotateWindow(rotateValue, Y_AXIS);
 }
 
@@ -131,18 +131,18 @@ void MainWindow::on_rotateZ_dialMoved(int value)
 
     this->currentDialZValue = value;
 
-    Mediator *m = Mediator::getInstance();
+    Controller *m = Controller::getInstance();
     m->rotateWindow(rotateValue, Z_AXIS);
 }
 
 void MainWindow::on_buttonMoreZoom_clicked()
 {
-    Mediator::getInstance()->zoomWindow(this->ui->zoomSpeed->value());
+    Controller::getInstance()->zoomWindow(this->ui->zoomSpeed->value());
 }
 
 void MainWindow::on_buttonLessZoom_clicked()
 {
-    Mediator::getInstance()->zoomWindow(-this->ui->zoomSpeed->value());
+    Controller::getInstance()->zoomWindow(-this->ui->zoomSpeed->value());
 }
 
 void MainWindow::on_deleteButton_clicked()
@@ -157,7 +157,7 @@ void MainWindow::on_deleteButton_clicked()
 
     //listObjects->setCurrentRow(-1);
 
-    Mediator::getInstance()->deleteShape3D(index);
+    Controller::getInstance()->deleteShape3D(index);
 }
 
 void MainWindow::on_translateButton_clicked()
@@ -167,7 +167,7 @@ void MainWindow::on_translateButton_clicked()
 
     if(index != -1)
     {
-        Mediator::getInstance()->moveObject(index,this->ui->translateX->value(),
+        Controller::getInstance()->moveObject(index,this->ui->translateX->value(),
                                             this->ui->translateY->value(),
                                             this->ui->translateZ->value());
     }
@@ -185,7 +185,7 @@ void MainWindow::on_scaleButton_clicked()
 
     if(index != -1)
     {
-        Mediator::getInstance()->resizeObject(index,this->ui->scaleX->value(),
+        Controller::getInstance()->resizeObject(index,this->ui->scaleX->value(),
                                               this->ui->scaleY->value(),
                                               this->ui->scaleZ->value());
     }
@@ -213,11 +213,11 @@ void MainWindow::on_buttonRotate_clicked()
 
         if(ui->radioOrigin->isChecked())
         {
-            Mediator::getInstance()->rotateObject(index, this->ui->rotateObjAngle->value(), raxis, ORIGIN);
+            Controller::getInstance()->rotateObject(index, this->ui->rotateObjAngle->value(), raxis, ORIGIN);
         }
         else if(ui->radioPoint->isChecked())
         {
-            Mediator::getInstance()->rotateObject(index, this->ui->rotateObjAngle->value(),
+            Controller::getInstance()->rotateObject(index, this->ui->rotateObjAngle->value(),
                                                   this->ui->rotateXSpin->value(),
                                                   this->ui->rotateYSpin->value(),
                                                   this->ui->rotateZSpin->value(), raxis);
@@ -225,7 +225,7 @@ void MainWindow::on_buttonRotate_clicked()
         }
         else if(ui->radioCenter->isChecked())
         {
-            Mediator::getInstance()->rotateObject(index, this->ui->rotateObjAngle->value(), raxis, CENTER);
+            Controller::getInstance()->rotateObject(index, this->ui->rotateObjAngle->value(), raxis, CENTER);
         }
     } else {
         QMessageBox::warning(this,"Erro","No object selected.",QMessageBox::Ok);
@@ -266,11 +266,11 @@ void MainWindow::on_rotateObjDial_dialMoved(int value)
 
         if(ui->radioOrigin->isChecked())
         {
-            Mediator::getInstance()->rotateObject(index, rotateValue, raxis, ORIGIN);
+            Controller::getInstance()->rotateObject(index, rotateValue, raxis, ORIGIN);
         }
         else if(ui->radioPoint->isChecked())
         {
-            Mediator::getInstance()->rotateObject(index, rotateValue,
+            Controller::getInstance()->rotateObject(index, rotateValue,
                                                   this->ui->rotateXSpin->value(),
                                                   this->ui->rotateYSpin->value(),
                                                   this->ui->rotateZSpin->value(), raxis);
@@ -278,7 +278,7 @@ void MainWindow::on_rotateObjDial_dialMoved(int value)
         }
         else if(ui->radioCenter->isChecked())
         {
-            Mediator::getInstance()->rotateObject(index, rotateValue, raxis, CENTER);
+            Controller::getInstance()->rotateObject(index, rotateValue, raxis, CENTER);
         }
     }
 }
@@ -286,21 +286,15 @@ void MainWindow::on_rotateObjDial_dialMoved(int value)
 void MainWindow::on_radioButton_toggled(bool checked)
 {
     if(checked){
-        Mediator::getInstance()->setProjectionType(PARALLEL);
+        Controller::getInstance()->setProjectionType(PARALLEL);
     }else{
-        Mediator::getInstance()->setProjectionType(PERSPECTIVE);
+        Controller::getInstance()->setProjectionType(PERSPECTIVE);
     }
 }
 
 void MainWindow::on_resetWindowButton_clicked()
 {
-    Mediator::getInstance()->resetWindow();
+    Controller::getInstance()->resetWindow();
 }
 
-void MainWindow::on_loadXmlButton_clicked()
-{
-    QFileDialog* f = new QFileDialog();
-    QString fileName = f->getOpenFileName();
-    char *str = fileName.toLocal8Bit().data();
-    Mediator::getInstance()->loadObjFile(str);
-}
+

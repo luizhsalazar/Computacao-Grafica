@@ -37,6 +37,7 @@ private slots:
     void on_pushButtonPoint_clicked();
     void on_selectColorButton_clicked();
     void on_addObjectCancel_clicked();
+
 };
 
 #endif // ADDOBJECTS_H

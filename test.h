@@ -1,12 +1,13 @@
 #ifndef TEST_H
 #define TEST_H
 
-#include <mediator.h>
+#include <controller.h>
+#include <polygon3d.h>
 
 class Test
 {
 private:
-    Mediator *m;
+    Controller *m;
 public:
     Test();
     void run();
